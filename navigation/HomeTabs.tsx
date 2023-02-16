@@ -5,8 +5,20 @@ import { RootTabParamList, RootTabScreenProps } from "../types";
 import useColorScheme from "../hooks/useColorScheme";
 import Colors from "../constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import HomeScreen from "../screens/HomeScreen";
+import SearchScreen from "../screens/SearchScreen";
+import OrdersScreen from "../screens/OrdersScreen";
+import AccountScreen from "../screens/AccountScreen";
+import Home from "../assets/icons/HomeIcon.svg";
+import HomeActive from "../assets/icons/HomeActiveIcon.svg";
+import Search from "../assets/icons/SearchIcon.svg";
+import SearchActive from "../assets/icons/SearchActiveIcon.svg";
+import Orders from "../assets/icons/OrdersIcon.svg";
+import OrdersActive from "../assets/icons/OrdersActiveIcon.svg";
+
+import Account from "../assets/icons/AccountIcon.svg";
+import AccountActive from "../assets/icons/AccountActiveIcon.svg";
+import MainHeader from "../components/MainHeader/MainHeader";
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -15,45 +27,67 @@ import TabTwoScreen from "../screens/TabTwoScreen";
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function HomeTabs() {
-  const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="HomeScreen"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        header: () => <MainHeader />,
       }}
     >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Tab One",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
+        name="HomeScreen"
+        component={HomeScreen}
+        options={({}) => {
+          return {
+            tabBarIcon: ({ focused }) => {
+              if (focused) {
+                return <HomeActive />;
+              }
+              return <Home />;
+            },
+            tabBarLabel: " Home ",
+            tabBarLabelStyle: { color: Colors.primary },
+          };
+        }}
       />
 
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="SearchScreen"
+        component={SearchScreen}
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ focused }) => {
+            if (focused) {
+              return <SearchActive />;
+            }
+            return <Search />;
+          },
+          tabBarLabel: " Search ",
+        }}
+      />
+      <BottomTab.Screen
+        name="OrdersScreen"
+        component={OrdersScreen}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            if (focused) {
+              return <OrdersActive />;
+            }
+            return <Orders />;
+          },
+          tabBarLabel: " Orders ",
+        }}
+      />
+      <BottomTab.Screen
+        name="AccountScreen"
+        component={AccountScreen}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            if (focused) {
+              return <AccountActive />;
+            }
+            return <Account />;
+          },
+          tabBarLabel: " Orders ",
         }}
       />
     </BottomTab.Navigator>

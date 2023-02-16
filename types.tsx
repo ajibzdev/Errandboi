@@ -28,6 +28,7 @@ export type AuthStackParamList = {
   OnBoarding: undefined;
   WelcomeScreen: undefined;
   AccountSelectionScreen: undefined;
+  OtpScreen: undefined;
 };
 
 export type AuthenticatedStackParamList = {
@@ -38,8 +39,11 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  HomeScreen: undefined;
+  SearchScreen: undefined;
+
+  OrdersScreen: undefined;
+  AccountScreen: undefined;
 };
 
 export type ScreenNavigationType = {

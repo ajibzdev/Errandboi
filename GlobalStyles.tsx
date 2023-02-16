@@ -45,6 +45,9 @@ export default StyleSheet.create({
   textAlignCenter: {
     textAlign: "center",
   },
+  textCapitalize: {
+    textTransform: "capitalize",
+  },
 
   //  Backgrounds
   backgroundColorPrimary: {

@@ -17,82 +17,79 @@ import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FullWidthButton from "../components/shared/FullWidthButton";
+import SelectAccountComponent from "../components/AccountSelection/SelectAccountComponent";
+import BottomShadow from "../components/shared/BottomShadow";
+import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = Layout.window;
 
 const AccountSelectionScreen = () => {
-  const cellCount = 5;
+  const navigation = useNavigation();
 
-  const [value, setValue] = React.useState("");
-  const ref = useBlurOnFulfill({ value, cellCount: cellCount });
-  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
-  });
+  const [activeUser, setActiveUser] = useState("1");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    // @ts-ignore
+    navigation.navigate("OtpScreen");
+  };
 
   return (
     <SafeAreaView
       style={[GlobalStyles.root, GlobalStyles.backgroundColorWhite]}
     >
-      <NavTitle label="OTP Verification" />
-      <KeyboardAwareScrollView style={[GlobalStyles.flex1]}>
-        <View style={[GlobalStyles.alignCenter, { marginTop: 43 }]}>
-          <Icon height={305} width={297} />
-          <View style={[GlobalStyles.alignCenter, { marginTop: 33 }]}>
-            <Text style={[Fonts.sansNormal, GlobalStyles.marginVerticalMedium]}>
-              {`  We have sent a verification code to`}
-            </Text>
-            <Text style={[Fonts.sansNormal, { fontFamily: "sans-black" }]}>
-              bukunmi@gmail.com{" "}
-            </Text>
-          </View>
+      <NavTitle label="Account Selection" />
+      <View
+        style={[
+          GlobalStyles.alignCenter,
+          GlobalStyles.flex1,
+          GlobalStyles.paddingHorizontalLarge,
+          styles.mainContainer,
+        ]}
+      >
+        <Text style={[Fonts.sansH1, GlobalStyles.marginVerticalMedium]}>
+          Select Account Type
+        </Text>
 
-          <View style={[GlobalStyles.marginVerticalLarge]}>
-            <CodeField
-              ref={ref}
-              {...props}
-              autoFocus
-              // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
-              value={value}
-              onChangeText={setValue}
-              cellCount={cellCount}
-              rootStyle={{ marginTop: 30 }}
-              keyboardType="number-pad"
-              textContentType="oneTimeCode"
-              renderCell={({ index, symbol, isFocused }: any) => (
-                <Text
-                  key={index}
-                  style={[styles.cell, isFocused && styles.focusCell]}
-                  onLayout={getCellOnLayoutHandler(index)}
-                >
-                  {symbol || (isFocused ? <Cursor /> : null)}
-                </Text>
-              )}
-            />
-          </View>
+        <Text style={[Fonts.sansNormal]}>
+          Choose your account type to get started now!
+        </Text>
 
-          {/* Texts */}
-
-          <Text
-            style={[
-              Fonts.sansNormal,
-              { color: Colors.grey7D7D, marginBottom: Sizes.small },
-            ]}
-          >
-            Didn’t receive OTP code?
-          </Text>
-
-          <TouchableOpacity onPress={() => {}}>
-            <Text style={[Fonts.sansNormal, { color: Colors.primary }]}>
-              Resend Code
-            </Text>
-          </TouchableOpacity>
-
-          <View style={{ marginTop: 40 }}>
-            <FullWidthButton label="Verify & Proceed" onPress={() => {}} />
-          </View>
+        <View style={[GlobalStyles.marginVerticalExtraLarge]}>
+          <SelectAccountComponent
+            title="User"
+            description="Shop and get goods delivered"
+            isActive={activeUser === "1"}
+            onPress={() => {
+              setActiveUser("1");
+            }}
+          />
+          <SelectAccountComponent
+            title="Shopper"
+            description="Deliver goods and get paid"
+            isActive={activeUser === "2"}
+            onPress={() => {
+              setActiveUser("2");
+            }}
+          />
+          <SelectAccountComponent
+            title="Shop Owner"
+            description="Sell food, manage orders and stores"
+            isActive={activeUser === "3"}
+            onPress={() => {
+              setActiveUser("3");
+            }}
+          />
         </View>
-      </KeyboardAwareScrollView>
+      </View>
+      <BottomShadow bottom={-24}>
+        <FullWidthButton
+          onPress={handleSubmit}
+          label={"Proceed"}
+          loading={loading}
+          disabled={false}
+        />
+      </BottomShadow>
     </SafeAreaView>
   );
 };
@@ -100,20 +97,7 @@ const AccountSelectionScreen = () => {
 export default AccountSelectionScreen;
 
 const styles = StyleSheet.create({
-  cell: {
-    width: width * 0.12,
-    height: height * 0.04679803,
-    lineHeight: 38,
-    fontSize: Sizes.extraLarge,
-    borderWidth: height * 0.001,
-    borderRadius: height * 0.004,
-    marginHorizontal: 10,
-    color: "#032F2D",
-    borderColor: Colors.darkGreyText,
-    textAlign: "center",
-  },
-  focusCell: {
-    borderColor: Colors.primary,
-    backgroundColor: Colors.white,
+  mainContainer: {
+    marginTop: 14,
   },
 });

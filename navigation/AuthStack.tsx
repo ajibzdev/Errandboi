@@ -8,6 +8,7 @@ import OnBoardingScreen from "../screens/OnBoardingScreen";
 import ModalScreen from "../screens/ModalScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import AccountSelectionScreen from "../screens/AccountSelectionScreen";
+import OtpScreen from "../screens/OtpScreen";
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 
@@ -33,6 +34,8 @@ const AuthStack = () => {
       />
 
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen name="OtpScreen" component={OtpScreen} />
+
       <Stack.Screen
         name="AccountSelectionScreen"
         component={AccountSelectionScreen}
