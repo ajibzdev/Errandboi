@@ -6,6 +6,7 @@ import Fonts from "../../constants/Fonts";
 
 // icons
 import Back from "../../assets/icons/BackIcon.svg";
+import { Shadows } from "../../constants/Colors";
 type NavTitleType = {
   label: string;
   rightContent?: React.ReactNode;
@@ -22,6 +23,7 @@ const NavTitle: React.FC<NavTitleType> = ({ label }) => {
         GlobalStyles.justifySpaceBetween,
         GlobalStyles.paddingHorizontalExtraLarge,
         GlobalStyles.paddingVerticalMedium,
+        Shadows.shadowLight,
         styles.navContainer,
       ]}
     >

@@ -13,6 +13,8 @@ export default {
   grey7D7D: "#7D7D7D",
   greyD5D4: "#D5D4D4",
   grey6C6C: "#6C6C6C",
+  greyFFFF: "#FFFFFF",
+  greyF9F9: "#F9F9F9",
 
   inputGrey: "rgba(241, 241, 241, 1)",
   backgroundInput: "rgba(231, 231, 231, 1)",
@@ -27,6 +29,7 @@ export default {
   warning: "rgba(255, 38, 38, 1)",
   white: "#fff",
   black: "#000",
+  transparentBlack: "rgba(0, 0, 0, 0.2)",
 };
 
 export const Shadows = {

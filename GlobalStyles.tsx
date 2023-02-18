@@ -36,6 +36,9 @@ export default StyleSheet.create({
   },
 
   // Texts
+  textColorPrimary: {
+    color: Colors.primary,
+  },
   textColorWhite: {
     color: Colors.white,
   },
@@ -124,5 +127,10 @@ export default StyleSheet.create({
     height: 30,
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  // Image
+  image: {
+    resizeMode: "cover",
   },
 });

@@ -33,6 +33,8 @@ export type AuthStackParamList = {
 
 export type AuthenticatedStackParamList = {
   Home: undefined;
+  LocationScreen: undefined;
+  CartScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -60,6 +62,33 @@ export type DefaultType = any;
 export type LoginType = {
   state: BooleanType;
   setState?: DefaultType;
+};
+
+export type DisplayCardType = {
+  image: string;
+  label: string;
+  price?: string;
+  location: string;
+  status?: boolean;
+  isFood?: boolean;
+  time?: string;
+};
+
+export type DisplayButtonType = {
+  count: number;
+};
+
+export type SectionType = {
+  title: string;
+  data: DisplayCardType[];
+};
+
+// ORDERS
+export type OrderItemType = {
+  image: string;
+  label: string;
+  price: string;
+  date: string;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

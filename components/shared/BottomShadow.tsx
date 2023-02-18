@@ -6,9 +6,11 @@ import GlobalStyles from "../../GlobalStyles";
 const BottomShadow = ({
   children,
   bottom,
+  style,
 }: {
   children: React.ReactNode;
   bottom?: number;
+  style?: any;
 }) => {
   return (
     <View
@@ -19,13 +21,15 @@ const BottomShadow = ({
           alignItems: "center",
           // paddingBottom: 20,
           // top: Sizes.large,
+          position: "absolute",
           bottom: bottom || 0,
           backgroundColor: Colors.white,
         },
         Shadows.lightShadow,
+        style,
       ]}
     >
-      <View style={[GlobalStyles.alignCenter, { paddingTop: 16 }]}>
+      <View style={[GlobalStyles.alignCenter, { paddingTop: 16 }, style]}>
         <View style={{ marginBottom: 20 }}>{children}</View>
       </View>
     </View>

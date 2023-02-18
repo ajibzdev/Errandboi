@@ -4,10 +4,18 @@ import CartIcon from "../../assets/icons/CartIcon.svg";
 import GlobalStyles from "../../GlobalStyles";
 import Fonts from "../../constants/Fonts";
 import Colors from "../../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 const CartButton = () => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        // @ts-ignore
+        navigation.navigate("CartScreen");
+      }}
+    >
       <View
         style={[
           GlobalStyles.flexRow,

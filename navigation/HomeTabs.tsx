@@ -19,6 +19,7 @@ import OrdersActive from "../assets/icons/OrdersActiveIcon.svg";
 import Account from "../assets/icons/AccountIcon.svg";
 import AccountActive from "../assets/icons/AccountActiveIcon.svg";
 import MainHeader from "../components/MainHeader/MainHeader";
+import Fonts from "../constants/Fonts";
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -45,7 +46,22 @@ function HomeTabs() {
               }
               return <Home />;
             },
-            tabBarLabel: " Home ",
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text
+                  style={[
+                    Fonts.sansSemiBold,
+                    {
+                      fontSize: 12,
+                      lineHeight: 15,
+                      color: focused ? Colors.primary : Colors.grey6C6C,
+                    },
+                  ]}
+                >
+                  Home
+                </Text>
+              );
+            },
             tabBarLabelStyle: { color: Colors.primary },
           };
         }}
@@ -61,7 +77,22 @@ function HomeTabs() {
             }
             return <Search />;
           },
-          tabBarLabel: " Search ",
+          tabBarLabel: ({ focused }) => {
+            return (
+              <Text
+                style={[
+                  Fonts.sansSemiBold,
+                  {
+                    fontSize: 12,
+                    lineHeight: 15,
+                    color: focused ? Colors.primary : Colors.grey6C6C,
+                  },
+                ]}
+              >
+                Search
+              </Text>
+            );
+          },
         }}
       />
       <BottomTab.Screen
@@ -74,7 +105,22 @@ function HomeTabs() {
             }
             return <Orders />;
           },
-          tabBarLabel: " Orders ",
+          tabBarLabel: ({ focused }) => {
+            return (
+              <Text
+                style={[
+                  Fonts.sansSemiBold,
+                  {
+                    fontSize: 12,
+                    lineHeight: 15,
+                    color: focused ? Colors.primary : Colors.grey6C6C,
+                  },
+                ]}
+              >
+                Orders
+              </Text>
+            );
+          },
         }}
       />
       <BottomTab.Screen
@@ -87,7 +133,22 @@ function HomeTabs() {
             }
             return <Account />;
           },
-          tabBarLabel: " Orders ",
+          tabBarLabel: ({ focused }) => {
+            return (
+              <Text
+                style={[
+                  Fonts.sansSemiBold,
+                  {
+                    fontSize: 12,
+                    lineHeight: 15,
+                    color: focused ? Colors.primary : Colors.grey6C6C,
+                  },
+                ]}
+              >
+                Account
+              </Text>
+            );
+          },
         }}
       />
     </BottomTab.Navigator>
