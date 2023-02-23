@@ -23,6 +23,7 @@ export default {
 
   green71D: "#71D34E",
   redDB5: "#DB5858",
+  yellowFFDC: "#FFDC23",
 
   disabled: "#FFFFFF",
 

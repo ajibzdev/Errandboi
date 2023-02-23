@@ -29,14 +29,19 @@ export default {
     lineHeight: 45,
     fontFamily: "sans-black",
   },
-  sansH3: {
+  sansH2: {
     fontSize: 18,
     lineHeight: 23,
     fontFamily: "sans-black",
   },
-  sansH4: {
+  sansH3: {
     fontSize: 16,
     lineHeight: 20,
     fontFamily: "sans-black",
+  },
+  sansH4: {
+    fontSize: 14,
+    lineHeight: 18,
+    fontFamily: "sans-semiBold",
   },
 };

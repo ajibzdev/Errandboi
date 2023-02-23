@@ -5,6 +5,9 @@ import { AuthenticatedStackParamList } from "../types";
 import HomeTabs from "./HomeTabs";
 import LocationScreen from "../screens/LocationScreen";
 import CartScreen from "../screens/CartScreen";
+import CheckoutScreen from "../screens/CheckoutScreen";
+import SubmitOrderScreen from "../screens/SubmitOrderScreen";
+import OrderDetailsScreen from "../screens/OrderDetailsScreen";
 
 const Stack = createStackNavigator<AuthenticatedStackParamList>();
 
@@ -15,6 +18,14 @@ const AuthenticatedStack = () => {
       <Stack.Screen name="LocationScreen" component={LocationScreen} />
       {/* Cart */}
       <Stack.Screen name="CartScreen" component={CartScreen} />
+      {/* Checkout */}
+      <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+
+      {/* Submit Order */}
+      <Stack.Screen name="SubmitOrderScreen" component={SubmitOrderScreen} />
+
+      {/* Checkout */}
+      <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
     </Stack.Navigator>
   );
 };

@@ -17,10 +17,4 @@ export const CartData = [
     count: 3,
     image: "",
   },
-  {
-    label: "Tofu",
-    price: "1,250",
-    count: 1,
-    image: "",
-  },
 ];

@@ -35,6 +35,9 @@ export type AuthenticatedStackParamList = {
   Home: undefined;
   LocationScreen: undefined;
   CartScreen: undefined;
+  CheckoutScreen: undefined;
+  OrderDetailsScreen: undefined;
+  SubmitOrderScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

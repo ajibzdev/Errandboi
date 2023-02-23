@@ -11,9 +11,16 @@ import CartList from "../components/Cart/CartList";
 import BottomShadow from "../components/shared/BottomShadow";
 import Sizes from "../constants/Sizes";
 import FullSeperatedButton from "../components/shared/FullSeperatedButton";
+import { useNavigation } from "@react-navigation/native";
 
 const CartScreen = () => {
   const cartLength = CartData.length;
+  const navigation = useNavigation();
+
+  const handleSubmit = async () => {
+    // @ts-ignore
+    navigation.navigate("CheckoutScreen");
+  };
 
   return (
     <SafeAreaView style={[GlobalStyles.root]}>
@@ -94,7 +101,7 @@ const CartScreen = () => {
               ]}
             >
               <FullSeperatedButton
-                onPress={() => {}}
+                onPress={handleSubmit}
                 label={"Place Order"}
                 smallerLabel={"₦2,100"}
               />
