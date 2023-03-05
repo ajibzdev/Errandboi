@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import React, { useRef, useState } from "react";
 import GlobalStyles from "../GlobalStyles";
 import NavTitle from "../components/shared/NavTitle";
@@ -20,18 +20,54 @@ import FullWidthButton from "../components/shared/FullWidthButton";
 import SelectAccountComponent from "../components/AccountSelection/SelectAccountComponent";
 import BottomShadow from "../components/shared/BottomShadow";
 import { useNavigation } from "@react-navigation/native";
+import { postToEndpoint } from "../api/responseHandler";
+import API from "../api/API";
+import { ScreenNavigationType } from "../types";
 
 const { height, width } = Layout.window;
 
-const AccountSelectionScreen = () => {
+const AccountSelectionScreen: React.FC<ScreenNavigationType> = ({ route }) => {
   const navigation = useNavigation();
+  const { reqData } = route.params;
 
-  const [activeUser, setActiveUser] = useState("1");
+  const [activeUser, setActiveUser] = useState("3");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    // @ts-ignore
-    navigation.navigate("OtpScreen");
+    setLoading(() => true);
+    const response = await postToEndpoint(API.register, {
+      ...reqData,
+      role: parseInt(activeUser),
+    });
+
+    console.log({
+      ...reqData,
+      role: parseInt(activeUser),
+    });
+
+    if (!response) {
+      Alert.alert(
+        "Error",
+        `email already exist, 
+      Please login instead`,
+        [
+          {
+            text: "Okay",
+            onPress: () => {
+              // @ts-ignore
+              navigation.replace("login", { signUp: false });
+              // console.log(state);
+            },
+            style: "destructive",
+          },
+        ]
+      );
+    } else {
+      // @ts-ignore
+      navigation.navigate("OtpScreen");
+    }
+
+    setLoading(() => false);
   };
 
   return (
@@ -59,9 +95,9 @@ const AccountSelectionScreen = () => {
           <SelectAccountComponent
             title="User"
             description="Shop and get goods delivered"
-            isActive={activeUser === "1"}
+            isActive={activeUser === "3"}
             onPress={() => {
-              setActiveUser("1");
+              setActiveUser("3");
             }}
           />
           <SelectAccountComponent
@@ -75,9 +111,9 @@ const AccountSelectionScreen = () => {
           <SelectAccountComponent
             title="Shop Owner"
             description="Sell food, manage orders and stores"
-            isActive={activeUser === "3"}
+            isActive={activeUser === "1"}
             onPress={() => {
-              setActiveUser("3");
+              setActiveUser("1");
             }}
           />
         </View>

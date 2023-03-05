@@ -138,16 +138,7 @@ export const handlePasswordError = (_fn, errors, setErrors, setErrorMsgs) => {
     temp.password = true;
     setErrors(temp);
   } else {
-    // No Speacial Character
-    if (!_fn.match(/(?=.*?[#?!@$%^&*-])/)) {
-      setErrorMsgs((prevState) => ({
-        ...prevState,
-        ["password"]: "Password must contain a special character",
-      }));
-      let temp = errors;
-      temp.password = true;
-      setErrors(temp);
-    } else if (!_fn.match(/.{8,}/)) {
+    if (!_fn.match(/.{8,}/)) {
       // Length Checker
       setErrorMsgs((prevState) => ({
         ...prevState,

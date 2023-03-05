@@ -37,7 +37,7 @@ function RootNavigator() {
   const authCtx = React.useContext(AuthContext);
 
   return (
-    <>{authCtx.isAuthenticated ? <AuthStack /> : <AuthenticatedStack />}</>
+    <>{!authCtx.isAuthenticated ? <AuthStack /> : <AuthenticatedStack />}</>
   );
 }
 

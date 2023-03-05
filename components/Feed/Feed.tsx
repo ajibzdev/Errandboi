@@ -36,15 +36,20 @@ const Feed = () => {
               // decelerationRate={"fast"}
 
               // snapToInterval={height}
-              renderItem={({ item }) => (
-                <DisplayCard
-                  image={item.image}
-                  label={item.label}
-                  location={item.location}
-                  price={item.price}
-                  isFood={item.isFood}
-                />
-              )}
+              renderItem={({ item }) => {
+                const id = new Date().toString() + Math.random().toString();
+
+                return (
+                  <DisplayCard
+                    _id={id}
+                    image={item.image}
+                    label={item.label}
+                    location={item.location}
+                    price={item.price}
+                    isFood={item.isFood}
+                  />
+                );
+              }}
             />
           </>
         )}

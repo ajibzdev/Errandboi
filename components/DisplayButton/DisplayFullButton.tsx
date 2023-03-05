@@ -7,11 +7,26 @@ import Sizes from "../../constants/Sizes";
 import Colors from "../../constants/Colors";
 import Fonts from "../../constants/Fonts";
 import { DisplayButtonType } from "../../types";
+import { CartContext } from "../../store/cart-context";
 
-const DisplayFullButton = ({ count }: DisplayButtonType) => {
+const DisplayFullButton = ({ count, product }: DisplayButtonType) => {
+  const cartCtx = React.useContext(CartContext);
+
+  const addHandler = () => {
+    // @ts-ignore
+    cartCtx.updateCount(product._id, "increase");
+  };
+
+  const deleteHandler = () => {
+    // @ts-ignore
+    cartCtx.updateCount(product._id, "decrease");
+  };
   return (
     <View style={[GlobalStyles.flexRow, styles.button]}>
-      <TouchableOpacity style={[styles.icon, GlobalStyles.flexCenter]}>
+      <TouchableOpacity
+        style={[styles.icon, GlobalStyles.flexCenter]}
+        onPress={deleteHandler}
+      >
         <Minus height={10} width={16} />
       </TouchableOpacity>
 
@@ -24,7 +39,10 @@ const DisplayFullButton = ({ count }: DisplayButtonType) => {
       >
         {count}
       </Text>
-      <TouchableOpacity style={[styles.icon, GlobalStyles.flexCenter]}>
+      <TouchableOpacity
+        style={[styles.icon, GlobalStyles.flexCenter]}
+        onPress={addHandler}
+      >
         <Plus height={14} width={16} />
       </TouchableOpacity>
     </View>

@@ -1,2 +1,9 @@
-let production = false;
-export const BASE_URL = production ? "" : "http://192.168.0.198:8000";
+import Environment from "./Environment";
+
+export const URL = Environment.prod ? "" : `https://errand-boy.onrender.com`;
+
+export default {
+  // AUTHENTICATION
+  register: `${URL}/account/register/`,
+  login: `${URL}/account/login/`,
+};

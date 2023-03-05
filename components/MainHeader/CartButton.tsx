@@ -5,9 +5,11 @@ import GlobalStyles from "../../GlobalStyles";
 import Fonts from "../../constants/Fonts";
 import Colors from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { CartContext } from "../../store/cart-context";
 
 const CartButton = () => {
   const navigation = useNavigation();
+  const cartCtx = React.useContext(CartContext);
 
   return (
     <TouchableOpacity
@@ -32,7 +34,7 @@ const CartButton = () => {
             GlobalStyles.marginHorizontallMedium,
           ]}
         >
-          2
+          {cartCtx.cart.length}
         </Text>
       </View>
     </TouchableOpacity>

@@ -15,8 +15,10 @@ import LoginFooter from "../components/Login/LoginFooter";
 
 const { width, height } = Layout.window;
 
-const LoginScreen: React.FC<ScreenNavigationType> = ({ navigation }) => {
-  const [loginIsActive, setLoginIsActive] = useState<BooleanType>(true);
+const LoginScreen: React.FC<ScreenNavigationType> = ({ navigation, route }) => {
+  const [loginIsActive, setLoginIsActive] = useState<BooleanType>(
+    !route.params.signUp
+  );
 
   const renderItem = ({ item, i }: { item: any; i: number }) => {
     return <View />;

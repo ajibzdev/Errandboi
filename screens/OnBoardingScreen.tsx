@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   BackHandler,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import Run from "../assets/icons/RunDashIcon.svg";
 import GlobalStyles from "../GlobalStyles";
 import { ScreenNavigationType } from "../types";
@@ -47,13 +47,15 @@ const OnBoardingScreen: React.FC<ScreenNavigationType> = ({ navigation }) => {
 
   const navigateSignUp = () => {
     //   AsyncStorage.setItem("@viewedNewOnboarding", "true");
-    navigation.replace("signup");
+    navigation.navigate("login", { signUp: true });
   };
 
   const navigateLogIn = () => {
     // AsyncStorage.setItem("@viewedNewOnboarding", "true");
-    navigation.replace("login");
+    navigation.navigate("login", { signUp: false });
   };
+
+  useEffect;
 
   return (
     <SafeAreaView style={[GlobalStyles.root, GlobalStyles.alignCenter]}>

@@ -15,10 +15,12 @@ import { DisplayCardType } from "../../types";
 import DisplayButton from "../DisplayButton/DisplayButton";
 import { useNavigation } from "@react-navigation/native";
 import Layout from "../../constants/Layout";
+import { CartContext } from "../../store/cart-context";
 
 const { height, width } = Layout.window;
 
 const DisplayCard = ({
+  _id,
   image,
   label,
   location,
@@ -28,6 +30,9 @@ const DisplayCard = ({
   time,
 }: DisplayCardType) => {
   const navigation = useNavigation();
+
+  const cartCtx = React.useContext(CartContext);
+  const count = cartCtx.getProductCount(_id);
 
   return (
     <TouchableWithoutFeedback
@@ -46,7 +51,19 @@ const DisplayCard = ({
       }}
     >
       <View style={[styles.container, Shadows.shadowLight]}>
-        <DisplayButton count={0} />
+        <DisplayButton
+          count={count}
+          product={{
+            image,
+            label,
+            location,
+            isFood,
+            price,
+            status,
+            time,
+            _id,
+          }}
+        />
         <Image
           style={[GlobalStyles.width100, styles.image]}
           source={require("../../assets/images/FoodImage.png")}

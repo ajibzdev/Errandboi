@@ -129,6 +129,7 @@ const CheckoutScreen: React.FC<ScreenNavigationType> = ({ navigation }) => {
           rightElement={
             <Text style={[Fonts.sansH4, { color: Colors.grey6C6C }]}></Text>
           }
+          notOpen={true}
         />
 
         <Box

@@ -27,7 +27,7 @@ import FullWidthButton from "../shared/FullWidthButton";
 import Colors, { Shadows } from "../../constants/Colors";
 import Bio from "../../assets/icons/BiometricsIcon.svg";
 import { postToEndpoint } from "../../api/responseHandler";
-import { BASE_URL } from "../../api/API";
+import API from "../../api/API";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 
@@ -77,7 +77,6 @@ const SignupView: React.FC<LoginType> = ({ state, setState }) => {
   const loginHandler = async () => {
     setLoading(() => true);
     const reqData = {
-      // username:
       email,
       first_name: firstName,
       last_name: lastName,
@@ -85,29 +84,8 @@ const SignupView: React.FC<LoginType> = ({ state, setState }) => {
       password,
     };
 
-    const response = await postToEndpoint(
-      `${BASE_URL}/account/register/`,
-      reqData
-    );
-
-    if (!response) {
-      Alert.alert(
-        "Error",
-        `email already exist, 
-      Please login instead`,
-        [
-          {
-            text: "Okay",
-            onPress: () => {
-              setState(() => true);
-              // console.log(state);
-            },
-          },
-        ]
-      );
-    } else {
-      console.log("Success");
-    }
+    // @ts-ignore
+    navigation.navigate("AccountSelectionScreen", { reqData });
     setLoading(() => false);
   };
 
@@ -148,6 +126,7 @@ const SignupView: React.FC<LoginType> = ({ state, setState }) => {
                 setFirstName(() => text);
               }}
               placeholder="Boluwatife"
+              width={"48%"}
             />
             <AuthInput
               label="Last Name"
@@ -157,6 +136,7 @@ const SignupView: React.FC<LoginType> = ({ state, setState }) => {
                 setLastName(() => text);
               }}
               placeholder="Ayomide"
+              width={"48%"}
             />
           </View>
           <AuthInput
@@ -201,7 +181,13 @@ const SignupView: React.FC<LoginType> = ({ state, setState }) => {
             onPress={handleSubmit}
             label="Sign Up "
             disabled={
-              errors.email || errors.password || email == "" || password == ""
+              errors.email ||
+              errors.password ||
+              email == "" ||
+              password == "" ||
+              mobile == "" ||
+              email == null ||
+              password == null
             }
             loading={loading}
           />
@@ -215,9 +201,9 @@ const SignupView: React.FC<LoginType> = ({ state, setState }) => {
         ]}
       >
         <Text style={[Fonts.sansRegular]}>
-          New here ?{" "}
+          Already have an account ?{" "}
           <Text style={[{ color: Colors.primary }, Fonts.sansSemiBold]}>
-            Create account
+            Sign In
           </Text>
         </Text>
       </View>

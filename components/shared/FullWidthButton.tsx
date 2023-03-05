@@ -19,12 +19,16 @@ type FullWidthButtonType = {
   label: string;
   disabled?: boolean;
   loading?: BooleanType;
+  backgroundColor?: string;
+  textColor?: string;
 };
 const FullWidthButton: React.FC<FullWidthButtonType> = ({
   loading,
   label,
   disabled,
   onPress,
+  textColor,
+  backgroundColor,
 }) => {
   return (
     <View
@@ -36,11 +40,16 @@ const FullWidthButton: React.FC<FullWidthButtonType> = ({
     >
       <TouchableOpacity
         style={[
-          !loading ? GlobalStyles.backgroundColorPrimary : styles.disabled,
+          !loading
+            ? backgroundColor
+              ? { backgroundColor: backgroundColor }
+              : GlobalStyles.backgroundColorPrimary
+            : styles.disabled,
           disabled && styles.disabled,
           GlobalStyles.flexCenter,
           GlobalStyles.paddingVerticalLarge,
           GlobalStyles.marginVerticalSmall,
+
           styles.btn,
         ]}
         disabled={disabled}
@@ -49,7 +58,13 @@ const FullWidthButton: React.FC<FullWidthButtonType> = ({
         {!loading ? (
           <Text
             style={[
-              { color: disabled ? Colors.black : Colors.white },
+              {
+                color: textColor
+                  ? textColor
+                  : disabled
+                  ? Colors.white
+                  : Colors.white,
+              },
               Fonts.sansRegular,
             ]}
           >

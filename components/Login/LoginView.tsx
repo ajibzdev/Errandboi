@@ -6,7 +6,7 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import GlobalStyles from "../../GlobalStyles";
 import AuthInput from "../shared/AuthInput";
 import {
@@ -26,12 +26,20 @@ import FullWidthButton from "../shared/FullWidthButton";
 import Colors, { Shadows } from "../../constants/Colors";
 import Bio from "../../assets/icons/BiometricsIcon.svg";
 import { postToEndpoint } from "../../api/responseHandler";
-import { BASE_URL } from "../../api/API";
+
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
+import API from "../../api/API";
+import AuthContextProvider, { AuthContext } from "../../store/auth-context";
+import axios from "axios";
+import { UserContext } from "../../store/user-context";
 
 const LoginView: React.FC<ScreenNavigationType> = ({}) => {
   const navigation = useNavigation();
+  const authCtx = useContext(AuthContext);
+  const userCtx = useContext(UserContext);
+
+  // States
   const [email, setEmail] = useState<StringType>(null);
   const emailRef = useRef<DefaultType>();
 
@@ -62,17 +70,15 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
   };
 
   const loginHandler = async () => {
-    // setLoading(() => true);
+    setLoading(() => true);
 
     const reqData = {
       email,
       password,
     };
+
     try {
-      const response = await postToEndpoint(
-        `${BASE_URL}/account/login/`,
-        reqData
-      );
+      const response = await postToEndpoint(API.login, reqData);
 
       if (!response) {
         Alert.alert("Error", `Username or password is invalid`, [
@@ -82,14 +88,24 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
           },
         ]);
       } else {
-        console.log("Success");
+        axios.defaults.headers.common.Authorization = `Bearer ${response.access}`;
+        userCtx.setUserType(response.type);
+
+        const u = userCtx.user;
+
+        u.email = email;
+        u.token = response.token;
+
+        userCtx.userDetailsChange(u);
+        authCtx.authenticate(response.access);
       }
       console.log(response);
     } catch (err: any) {
       console.log(err.message);
     }
+
+    setLoading(() => false);
   };
-  // setLoading(() => false);
 
   const handleSubmit = async () => {
     Keyboard.dismiss();

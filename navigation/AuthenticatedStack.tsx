@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthenticatedStackParamList } from "../types";
 import HomeTabs from "./HomeTabs";
@@ -8,24 +8,86 @@ import CartScreen from "../screens/CartScreen";
 import CheckoutScreen from "../screens/CheckoutScreen";
 import SubmitOrderScreen from "../screens/SubmitOrderScreen";
 import OrderDetailsScreen from "../screens/OrderDetailsScreen";
+import AccountInfoScreen from "../screens/AccountInfoScreen";
+import PaymentScreen from "../screens/PaymentScreen";
+import AddressScreen from "../screens/AddressScreen";
+import DeleteAccountScreen from "../screens/DeleteAccountScreen";
+import SetNewPasswordScreen from "../screens/SetNewPasswordScreen";
+import { UserContext } from "../store/user-context";
+import StoreDetailsScreen from "../screens/StoreDetailsScreen";
+import FoodServiceTab from "./FoodServiceTabs";
+import AddProductScreen from "../screens/shop/AddProductScreen";
 
 const Stack = createStackNavigator<AuthenticatedStackParamList>();
 
 const AuthenticatedStack = () => {
+  const userCtx = useContext(UserContext);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={HomeTabs} />
-      <Stack.Screen name="LocationScreen" component={LocationScreen} />
-      {/* Cart */}
-      <Stack.Screen name="CartScreen" component={CartScreen} />
-      {/* Checkout */}
-      <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+      {userCtx.user.userType === "User" ? (
+        <>
+          <Stack.Screen name="Home" component={HomeTabs} />
+          <Stack.Screen name="LocationScreen" component={LocationScreen} />
+          {/* Cart */}
+          <Stack.Screen name="CartScreen" component={CartScreen} />
+          {/* Checkout */}
+          <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
 
-      {/* Submit Order */}
-      <Stack.Screen name="SubmitOrderScreen" component={SubmitOrderScreen} />
+          {/* Submit Order */}
+          <Stack.Screen
+            name="SubmitOrderScreen"
+            component={SubmitOrderScreen}
+          />
 
-      {/* Checkout */}
-      <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
+          {/* Checkout */}
+          <Stack.Screen
+            name="OrderDetailsScreen"
+            component={OrderDetailsScreen}
+          />
+
+          {/* Accounts */}
+          {/* Account Info */}
+          <Stack.Screen
+            name="AccountInfoScreen"
+            component={AccountInfoScreen}
+          />
+
+          {/* Payment Screen */}
+          <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
+
+          {/* Address Screen*/}
+          <Stack.Screen name="AddressScreen" component={AddressScreen} />
+
+          {/* Delete Account Screen*/}
+          <Stack.Screen
+            name="DeleteAccountScreen"
+            component={DeleteAccountScreen}
+          />
+
+          {/* Address Screen*/}
+          <Stack.Screen
+            name="SetNewPasswordScreen"
+            component={SetNewPasswordScreen}
+          />
+        </>
+      ) : null}
+
+      {userCtx.user.userType !== "Food service" ? (
+        <>
+          {/* <Stack.Screen
+            name="StoreDetailsScreen"
+            component={StoreDetailsScreen}
+          /> */}
+          <Stack.Screen name="FoodServiceTab" component={FoodServiceTab} />
+          <Stack.Screen name="AddProductScreen" component={AddProductScreen} />
+        </>
+      ) : null}
+      {userCtx.user.userType == "Courier" ? (
+        <>
+          <Stack.Screen name="Home" component={HomeTabs} />
+        </>
+      ) : null}
     </Stack.Navigator>
   );
 };

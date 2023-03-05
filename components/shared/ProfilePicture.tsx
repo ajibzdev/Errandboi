@@ -13,7 +13,7 @@ const ProfilePicture = ({
 }: ProfilePictureType) => {
   return (
     <Image
-      source={require("../../assets/images/FoodImage.png")}
+      source={!uri ? require("../../assets/images/FoodImage.png") : { uri }}
       resizeMode={"cover"}
       style={[{ height, width, borderRadius: width }]}
     />

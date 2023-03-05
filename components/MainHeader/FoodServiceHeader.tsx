@@ -6,10 +6,11 @@ import GlobalStyles from "../../GlobalStyles";
 import CartButton from "./CartButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CartContext } from "../../store/cart-context";
+import ProfilePicture from "../shared/ProfilePicture";
 
 const { height, width } = Layout.window;
 
-const MainHeader = () => {
+const FoodServiceHeader = () => {
   return (
     <SafeAreaView
       style={[
@@ -21,18 +22,21 @@ const MainHeader = () => {
         styles.container,
       ]}
     >
-      <View style={[GlobalStyles.flex1]} />
-
       <View style={[GlobalStyles.flex1]}>
+        <ProfilePicture uri="" height={32} width={32} />
+      </View>
+
+      <View style={[GlobalStyles.flex1, GlobalStyles.alignCenter]}>
         <ErrandIcon />
       </View>
 
-      <CartButton />
+      {/* <CartButton /> */}
+      <View style={[GlobalStyles.flex1]} />
     </SafeAreaView>
   );
 };
 
-export default MainHeader;
+export default FoodServiceHeader;
 
 const styles = StyleSheet.create({
   container: {

@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   TouchableWithoutFeedback,
+  KeyboardTypeOptions,
 } from "react-native";
-
+import { Feather } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import Fonts from "../../constants/Fonts";
 import { DefaultType } from "../../types";
@@ -21,11 +22,15 @@ interface authInputProps {
   password?: boolean;
   value: string | null;
   isTextInputVisible?: boolean;
-  onChangeText?: (text: string) => void;
+  onChangeText: (text: string) => void;
   onSubmitEditing?: () => void;
   placeholder?: string;
   required?: any;
   ref: any;
+  width?: string | number;
+  dropdown?: boolean;
+  keyboardType?: KeyboardTypeOptions;
+  tapFunction?: () => void;
 }
 
 const AuthInput: React.FC<authInputProps> = React.forwardRef(
@@ -41,6 +46,10 @@ const AuthInput: React.FC<authInputProps> = React.forwardRef(
       onSubmitEditing,
       required,
       isTextInputVisible,
+      width,
+      dropdown,
+      tapFunction,
+      keyboardType,
       ...props
     }: authInputProps,
     ref
@@ -49,9 +58,15 @@ const AuthInput: React.FC<authInputProps> = React.forwardRef(
     const [isFocused, setIsFocused] = React.useState(false);
 
     return (
-      // @ts-ignore
-      <TouchableWithoutFeedback onPress={() => ref.current.focus()}>
-        <View style={{ marginBottom: Sizes.large, flex: 1 }}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          // @ts-ignore
+          ref.current.focus();
+
+          tapFunction && tapFunction();
+        }}
+      >
+        <View style={{ marginBottom: Sizes.large, width }}>
           <Text style={style.label}>
             {label}{" "}
             {required && <Text style={{ color: Colors.primary }}>*</Text>}
@@ -84,16 +99,22 @@ const AuthInput: React.FC<authInputProps> = React.forwardRef(
                 marginLeft: 12,
                 fontSize: 16,
               }}
+              keyboardType={keyboardType}
               onSubmitEditing={onSubmitEditing}
               //   @ts-ignore
               ref={ref}
               {...props}
+              keybo
             />
             {password && (
               <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
                 <Text style={style.textPassword}> Show </Text>
               </TouchableOpacity>
             )}
+
+            {dropdown ? (
+              <Feather name="chevron-down" size={24} color={Colors.black} />
+            ) : null}
           </View>
           {error && (
             <Text style={{ marginTop: 7, color: Colors.warning, fontSize: 12 }}>
@@ -115,7 +136,7 @@ const style = StyleSheet.create({
   },
   inputContainer: {
     height: 55,
-    flex: 1,
+
     width: "100%",
     borderRadius: Sizes.medium,
     backgroundColor: Colors.backgroundInput,
