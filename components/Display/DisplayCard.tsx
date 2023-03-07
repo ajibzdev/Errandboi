@@ -28,6 +28,8 @@ const DisplayCard = ({
   price,
   status,
   time,
+  shopOwner,
+  lastEdited,
 }: DisplayCardType) => {
   const navigation = useNavigation();
 
@@ -38,6 +40,7 @@ const DisplayCard = ({
     <TouchableWithoutFeedback
       onPress={() => {
         !isFood &&
+          !shopOwner &&
           // @ts-ignore
           navigation.navigate("LocationScreen", {
             image,
@@ -53,6 +56,7 @@ const DisplayCard = ({
       <View style={[styles.container, Shadows.shadowLight]}>
         <DisplayButton
           count={count}
+          shopOwner={shopOwner}
           product={{
             image,
             label,
@@ -96,80 +100,99 @@ const DisplayCard = ({
             )}
           </View>
 
-          <View
-            style={[
-              GlobalStyles.marginVerticalSmall,
-              GlobalStyles.width100,
-              { flexDirection: "row", alignItems: "center" },
-            ]}
-          >
-            <Location height={12} width={Sizes.medium} />
+          {shopOwner && (
             <Text
               style={[
-                Fonts.sansNormal,
-                GlobalStyles.marginHorizontalSmall,
-                GlobalStyles.textCapitalize,
-                styles.font14,
-                styles.location,
+                Fonts.sansRegular,
+                { fontSize: 12, color: Colors.grey7D7D },
               ]}
-              numberOfLines={1}
             >
-              {location}
+              Last edited: {lastEdited}
             </Text>
-          </View>
+          )}
 
-          <View
-            style={[
-              GlobalStyles.flexRow,
-              GlobalStyles.width100,
-              GlobalStyles.alignCenter,
-            ]}
-          >
-            {isFood ? (
-              <Text
+          {!shopOwner && (
+            <View style={[GlobalStyles.width100, GlobalStyles.alignCenter]}>
+              <View
                 style={[
-                  Fonts.sansNormal,
-                  styles.font14,
-                  GlobalStyles.flex1,
-                  GlobalStyles.textCapitalize,
-                  { color: status ? Colors.green71D : Colors.redDB5 },
+                  GlobalStyles.marginVerticalSmall,
+                  GlobalStyles.width100,
+                  { flexDirection: "row", alignItems: "center" },
                 ]}
-                numberOfLines={1}
               >
-                {status ? "Available" : " Not Available "}
-              </Text>
-            ) : (
-              <Text
-                style={[
-                  Fonts.sansNormal,
-                  styles.font14,
-                  GlobalStyles.flex1,
-                  GlobalStyles.textCapitalize,
-                  { color: status ? Colors.green71D : Colors.redDB5 },
-                ]}
-                numberOfLines={1}
-              >
-                {status ? "Opened" : " Closed "}
-              </Text>
-            )}
+                <Location height={12} width={Sizes.medium} />
+                <Text
+                  style={[
+                    Fonts.sansNormal,
+                    GlobalStyles.marginHorizontalSmall,
+                    GlobalStyles.textCapitalize,
+                    styles.font14,
+                    styles.location,
+                  ]}
+                  numberOfLines={1}
+                >
+                  {location}
+                </Text>
+              </View>
 
-            {!isFood && (
-              <Text style={[styles.font14, styles.grey6C]}>
-                {status ? (
-                  <Text>
-                    Delivery:{" "}
-                    <Text
-                      style={[Fonts.sansSemiBold, styles.grey6C, styles.font14]}
-                    >
-                      ₦{price}
-                    </Text>{" "}
+              <View
+                style={[
+                  GlobalStyles.flexRow,
+                  GlobalStyles.width100,
+                  GlobalStyles.alignCenter,
+                ]}
+              >
+                {isFood ? (
+                  <Text
+                    style={[
+                      Fonts.sansNormal,
+                      styles.font14,
+                      GlobalStyles.flex1,
+                      GlobalStyles.textCapitalize,
+                      { color: status ? Colors.green71D : Colors.redDB5 },
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {status ? "Available" : " Not Available "}
                   </Text>
                 ) : (
-                  <Text>{time}</Text>
+                  <Text
+                    style={[
+                      Fonts.sansNormal,
+                      styles.font14,
+                      GlobalStyles.flex1,
+                      GlobalStyles.textCapitalize,
+                      { color: status ? Colors.green71D : Colors.redDB5 },
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {status ? "Opened" : " Closed "}
+                  </Text>
                 )}
-              </Text>
-            )}
-          </View>
+
+                {!isFood && (
+                  <Text style={[styles.font14, styles.grey6C]}>
+                    {status ? (
+                      <Text>
+                        Delivery:{" "}
+                        <Text
+                          style={[
+                            Fonts.sansSemiBold,
+                            styles.grey6C,
+                            styles.font14,
+                          ]}
+                        >
+                          ₦{price}
+                        </Text>{" "}
+                      </Text>
+                    ) : (
+                      <Text>{time}</Text>
+                    )}
+                  </Text>
+                )}
+              </View>
+            </View>
+          )}
         </View>
       </View>
     </TouchableWithoutFeedback>

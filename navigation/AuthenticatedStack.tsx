@@ -17,6 +17,16 @@ import { UserContext } from "../store/user-context";
 import StoreDetailsScreen from "../screens/StoreDetailsScreen";
 import FoodServiceTab from "./FoodServiceTabs";
 import AddProductScreen from "../screens/shop/AddProductScreen";
+import EditProductScreen from "../screens/shop/EditProductScreen";
+import ViewMoreScreen from "../screens/ViewMoreScreen";
+import FoodServiceOrderDetailsScreen from "../screens/shop/FoodServiceOrderDetailsScreen";
+import FoodServiceAccountScreen from "../screens/shop/FoodServiceAccountScreen";
+import FoodServiceAccountInfoScreen from "../screens/shop/FoodServiceAccountInfoScreen";
+import FoodServicePaymentScreen from "../screens/shop/FoodServicePaymentScreen";
+import FoodServiceTransactionScreen from "../screens/shop/FoodServiceTransactionScreen";
+import FoodServiceWithdrawScreen from "../screens/shop/FoodServiceWithdrawScreen";
+import FoodServiceStoreScreen from "../screens/shop/FoodServiceStoreScreen";
+import AccountScreen from "../screens/AccountScreen";
 
 const Stack = createStackNavigator<AuthenticatedStackParamList>();
 
@@ -81,6 +91,60 @@ const AuthenticatedStack = () => {
           /> */}
           <Stack.Screen name="FoodServiceTab" component={FoodServiceTab} />
           <Stack.Screen name="AddProductScreen" component={AddProductScreen} />
+          <Stack.Screen
+            name="EditProductScreen"
+            component={EditProductScreen}
+          />
+          <Stack.Screen name="ViewMoreScreen" component={ViewMoreScreen} />
+          <Stack.Screen
+            name="FoodServiceOrderDetailsScreen"
+            component={FoodServiceOrderDetailsScreen}
+          />
+          <Stack.Screen
+            name="FoodServiceAccountScreen"
+            component={FoodServiceAccountScreen}
+          />
+
+          {/* Accounts */}
+          {/* Account Info */}
+          <Stack.Screen
+            name="FoodServiceStoreInfoScreen"
+            component={FoodServiceStoreScreen}
+          />
+          <Stack.Screen
+            name="FoodServiceAccountInfoScreen"
+            component={AccountInfoScreen}
+          />
+
+          {/* Payment Screen */}
+          <Stack.Screen
+            name="FoodServicePaymentScreen"
+            component={PaymentScreen}
+          />
+
+          {/* Transaction Screen*/}
+          <Stack.Screen
+            name="FoodServiceTransactionScreen"
+            component={FoodServiceTransactionScreen}
+          />
+
+          {/* Withdraw Screen*/}
+          <Stack.Screen
+            name="FoodServiceWithdrawScreen"
+            component={FoodServiceWithdrawScreen}
+          />
+
+          {/* Delete Account Screen*/}
+          <Stack.Screen
+            name="DeleteAccountScreen"
+            component={DeleteAccountScreen}
+          />
+
+          {/* Address Screen*/}
+          <Stack.Screen
+            name="SetNewPasswordScreen"
+            component={SetNewPasswordScreen}
+          />
         </>
       ) : null}
       {userCtx.user.userType == "Courier" ? (

@@ -5,6 +5,8 @@ import ShopProducts from "../../data/ShopProducts";
 import Fonts from "../../constants/Fonts";
 import FullWidthButton from "../../components/shared/FullWidthButton";
 import { ScreenNavigationType } from "../../types";
+import Feed from "../../components/Feed/Feed";
+import FeedFoodService from "../../components/Feed/FeedFoodService";
 
 const FoodServiceHomeScreen: React.FC<ScreenNavigationType> = ({
   navigation,
@@ -26,6 +28,16 @@ const FoodServiceHomeScreen: React.FC<ScreenNavigationType> = ({
               After you add a product customers will see your profile
             </Text>
           </View>
+        </View>
+      )}
+
+      {ShopProducts.length > 0 && (
+        <View style={[GlobalStyles.flex1]}>
+          <Text style={[Fonts.sansH1, GlobalStyles.paddingHorizontalLarge]}>
+            Shop
+          </Text>
+          <FeedFoodService />
+          <FullWidthButton label="Add Product " onPress={addProductHandler} />
         </View>
       )}
     </View>

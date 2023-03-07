@@ -17,7 +17,7 @@ import { handleProfilePicture } from "../../utils/handleImages";
 import Fonts from "../../constants/Fonts";
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
-import { StringType } from "../../types";
+import { ScreenNavigationType, StringType } from "../../types";
 import AuthInput from "../../components/shared/AuthInput";
 import {
   numberWithCommas,
@@ -26,7 +26,13 @@ import {
 import BottomShadow from "../../components/shared/BottomShadow";
 import FullWidthButton from "../../components/shared/FullWidthButton";
 
-const AddProductScreen = () => {
+const EditProductScreen: React.FC<ScreenNavigationType> = ({
+  navigation,
+  route,
+}) => {
+  // Product ID
+  const { id } = route.params;
+
   // States
   const [value, setValue] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
@@ -46,7 +52,7 @@ const AddProductScreen = () => {
 
   return (
     <SafeAreaView style={[GlobalStyles.root]}>
-      <NavTitle label="Add Product" />
+      <NavTitle label="Edit Product" />
       <TouchableWithoutFeedback
         onPress={() => {
           Keyboard.dismiss();
@@ -145,7 +151,7 @@ const AddProductScreen = () => {
   );
 };
 
-export default AddProductScreen;
+export default EditProductScreen;
 
 const styles = StyleSheet.create({
   btn: {

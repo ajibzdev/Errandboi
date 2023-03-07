@@ -12,7 +12,7 @@ import { CartData } from "../data/Cart";
 import BottomShadow from "../components/shared/BottomShadow";
 import Sizes from "../constants/Sizes";
 
-const GreyText = ({ text }: { text: string }) => {
+export const GreyText = ({ text }: { text: string }) => {
   return <Text style={[Fonts.sansSemiBold, styles.greyText]}>{text}</Text>;
 };
 const OrderDetailsScreen: React.FC<ScreenNavigationType> = ({

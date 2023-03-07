@@ -128,6 +128,16 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  line: {
+    // height: 1.5,
+    // flex: 1,
+    borderWidth: 0.5,
+    borderColor: "rgba(216, 216, 216, 1)",
+    marginVertical: Sizes.medium,
+    marginHorizontal: Sizes.medium,
+    // backgroundColor: "rgba(216, 216, 216, 1)",
+    backgroundColor: Colors.grey7D7D,
+  },
 
   // Image
   image: {

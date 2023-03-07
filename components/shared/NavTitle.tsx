@@ -39,7 +39,10 @@ const NavTitle: React.FC<NavTitleType> = ({ label }) => {
       </TouchableOpacity>
 
       <View style={[styles.displayContainer]}>
-        <Text style={[Fonts.sansRegular, { fontFamily: "sans-black" }]}>
+        <Text
+          numberOfLines={1}
+          style={[Fonts.sansRegular, { fontFamily: "sans-black" }]}
+        >
           {label}{" "}
         </Text>
       </View>

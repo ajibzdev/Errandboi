@@ -1,16 +1,16 @@
-import { StyleSheet, Text, View, Switch } from "react-native";
+import { StyleSheet, Text, View, Switch, ScrollView } from "react-native";
 import React from "react";
-import GlobalStyles from "../GlobalStyles";
-import Fonts from "../constants/Fonts";
-import Box from "../components/shared/Box";
-import { ScreenNavigationType } from "../types";
-import Padlock from "../assets/icons/Padlock.svg";
-import Card from "../assets/icons/CardIcon.svg";
-import Location from "../assets/icons/LocationBlackIcon.svg";
-import Trash from "../assets/icons/TrashBlackIcon.svg";
-import Exit from "../assets/icons/ExitIcon.svg";
+import GlobalStyles from "../../GlobalStyles";
+import Fonts from "../../constants/Fonts";
+import Box from "../../components/shared/Box";
+import { ScreenNavigationType } from "../../types";
+import Padlock from "../../assets/icons/Padlock.svg";
+import Card from "../../assets/icons/CardIcon.svg";
+import Location from "../../assets/icons/LocationBlackIcon.svg";
+import Trash from "../../assets/icons/TrashBlackIcon.svg";
+import Exit from "../../assets/icons/ExitIcon.svg";
 
-const AccountScreen: React.FC<ScreenNavigationType> = ({
+const FoodServiceAccountScreen: React.FC<ScreenNavigationType> = ({
   navigation,
   route,
 }) => {
@@ -25,36 +25,48 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
   const [faceIDEnabled, setFaceIDEnabled] = React.useState<boolean>(false);
 
   return (
-    <View style={[GlobalStyles.root, GlobalStyles.paddingHorizontalLarge]}>
+    <ScrollView
+      style={[GlobalStyles.root, GlobalStyles.paddingHorizontalLarge]}
+    >
       <Text style={[Fonts.sansH1]}>Account Settings</Text>
 
       <Box
-        heading="Account Info"
+        heading="Store Info"
         _onPress={() => {
-          navigation.navigate("AccountInfoScreen");
+          navigation.navigate("FoodServiceStoreInfoScreen");
         }}
         icon={<Padlock />}
         ref={accountInfoRef}
         notOpen={true}
       />
       <Box
-        heading="Payment"
+        heading="Payment & Billing"
         _onPress={() => {
-          navigation.navigate("PaymentScreen");
+          navigation.navigate("FoodServicePaymentScreen");
         }}
         icon={<Card />}
         ref={paymentRef}
         notOpen={true}
       />
       <Box
-        heading="Address"
+        heading="Account Info"
         _onPress={() => {
-          navigation.navigate("AddressScreen");
+          navigation.navigate("FoodServiceAccountInfoScreen");
         }}
-        icon={<Location />}
-        ref={addressRef}
+        icon={<Padlock />}
+        ref={accountInfoRef}
         notOpen={true}
       />
+      <Box
+        heading="Transaction History"
+        _onPress={() => {
+          navigation.navigate("FoodServiceTransactionScreen");
+        }}
+        icon={<Card />}
+        ref={paymentRef}
+        notOpen={true}
+      />
+
       <Box
         heading="Delete your account"
         _onPress={() => {
@@ -62,6 +74,16 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
         }}
         icon={<Trash />}
         ref={accountInfoRef}
+        notOpen={true}
+      />
+
+      <Box
+        heading="Withdraw"
+        _onPress={() => {
+          navigation.navigate("FoodServiceWithdrawScreen");
+        }}
+        icon={<Card />}
+        ref={paymentRef}
         notOpen={true}
       />
       <Box
@@ -88,10 +110,10 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
           }
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
-export default AccountScreen;
+export default FoodServiceAccountScreen;
 
 const styles = StyleSheet.create({});

@@ -28,6 +28,7 @@ import Fonts from "../constants/Fonts";
 import FoodServiceHomeScreen from "../screens/shop/FoodServiceHomeScreen";
 import FoodServiceOrdersScreen from "../screens/shop/FoodServiceOrdersScreen";
 import FoodServiceHeader from "../components/MainHeader/FoodServiceHeader";
+import FoodServiceAccountScreen from "../screens/shop/FoodServiceAccountScreen";
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -104,8 +105,8 @@ function FoodServiceTab() {
         }}
       />
       <BottomTab.Screen
-        name="AccountScreen"
-        component={AccountScreen}
+        name="FoodServiceAccountScreen"
+        component={FoodServiceAccountScreen}
         options={{
           tabBarIcon: ({ focused }) => {
             if (focused) {

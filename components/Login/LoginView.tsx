@@ -197,6 +197,7 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
             ]}
           >
             <TouchableOpacity
+              disabled={email == "" || password == ""}
               style={[
                 GlobalStyles.flexRow,
                 GlobalStyles.justifySpaceBetween,

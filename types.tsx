@@ -45,10 +45,19 @@ export type AuthenticatedStackParamList = {
   AddressScreen: undefined;
   DeleteAccountScreen: undefined;
   SetNewPasswordScreen: undefined;
+  ViewMoreScreen: undefined;
 
   // Food Service
   StoreDetailsScreen: undefined;
   AddProductScreen: undefined;
+  EditProductScreen: undefined;
+  FoodServiceOrderDetailsScreen: undefined;
+  FoodServiceAccountScreen: undefined;
+  FoodServiceAccountInfoScreen: undefined;
+  FoodServiceStoreInfoScreen: undefined;
+  FoodServiceTransactionScreen: undefined;
+  FoodServicePaymentScreen: undefined;
+  FoodServiceWithdrawScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -65,6 +74,7 @@ export type RootTabParamList = {
 export type FoodServiceTabParamList = {
   FoodServiceHomeScreen: undefined;
   FoodServiceOrdersScreen: undefined;
+  FoodServiceAccountScreen: undefined;
   AccountScreen: undefined;
 };
 
@@ -101,11 +111,14 @@ export type DisplayCardType = {
   isFood?: boolean;
   time?: string;
   _id?: string;
+  shopOwner?: boolean;
+  lastEdited?: string;
 };
 
 export type DisplayButtonType = {
   count: number;
   product: DisplayCardType;
+  shopOwner?: boolean;
 };
 
 export type SectionType = {
@@ -122,6 +135,12 @@ export type OrderItemType = {
 };
 
 // User
+
+type accountType = {
+  accountName: string;
+  accountNumber: number | string;
+  bankName: string;
+};
 export type UserType = {
   firstName: StringType;
   lastName: StringType;
@@ -131,6 +150,7 @@ export type UserType = {
   token: StringType;
   hasVisited: boolean;
   faceIdEnabled?: boolean;
+  account: accountType[];
 };
 
 export type ProductType = {

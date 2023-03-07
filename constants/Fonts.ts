@@ -30,7 +30,7 @@ export default {
     fontFamily: "sans-black",
   },
   sansH2: {
-    fontSize: 18,
+    fontSize: 24,
     lineHeight: 23,
     fontFamily: "sans-black",
   },

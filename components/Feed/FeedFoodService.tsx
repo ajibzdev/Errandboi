@@ -7,18 +7,23 @@ import GlobalStyles from "../../GlobalStyles";
 import FullTextInput from "../shared/FullTextInput";
 import Sizes from "../../constants/Sizes";
 import Layout from "../../constants/Layout";
+import { useNavigation } from "@react-navigation/native";
+import ShopProducts from "../../data/ShopProducts";
 
 const { height, width } = Layout.window;
 
 type FeedType = {
   Sections?: any;
 };
-const Feed: React.FC<FeedType> = ({ Sections }) => {
+
+const FeedFoodService = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={[styles.container]}>
       <SectionList
         stickySectionHeadersEnabled={false}
-        sections={Sections}
+        sections={ShopProducts}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         bounces={false}
@@ -29,7 +34,20 @@ const Feed: React.FC<FeedType> = ({ Sections }) => {
         renderSectionHeader={({ section }) => (
           <>
             {/* @ts-ignore */}
-            <SectionHeader section={section} />
+            <SectionHeader
+              section={section}
+              onPress={() => {
+                // @ts-ignore
+                navigation.navigate("ViewMoreScreen", {
+                  title: section.title,
+                  onRefresh: () => {},
+                  callFunction: () => {},
+                  shopOwner: true,
+                  data: section.data,
+                  isFood: section.data[0].isFood,
+                });
+              }}
+            />
 
             <FlatList
               data={section.data}
@@ -41,15 +59,16 @@ const Feed: React.FC<FeedType> = ({ Sections }) => {
 
               // snapToInterval={height}
               renderItem={({ item }) => {
-                // const id = new Date().toString() + Math.random().toString();
+                const id = new Date().toString() + Math.random().toString();
 
                 return (
                   <DisplayCard
-                    // _id={id}
+                    _id={id}
                     image={item.image}
                     label={item.label}
                     location={item.location}
                     price={item.price}
+                    shopOwner={true}
                     isFood={item.isFood}
                   />
                 );
@@ -65,7 +84,7 @@ const Feed: React.FC<FeedType> = ({ Sections }) => {
   );
 };
 
-export default Feed;
+export default FeedFoodService;
 
 const styles = StyleSheet.create({
   container: {},

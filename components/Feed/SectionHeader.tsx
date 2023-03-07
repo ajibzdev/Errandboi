@@ -4,7 +4,13 @@ import { SectionType } from "../../types";
 import GlobalStyles from "../../GlobalStyles";
 import Fonts from "../../constants/Fonts";
 
-const SectionHeader = ({ section }: { section: SectionType }) => {
+const SectionHeader = ({
+  section,
+  onPress,
+}: {
+  section: SectionType;
+  onPress: () => void;
+}) => {
   return (
     <View
       style={[
@@ -18,10 +24,9 @@ const SectionHeader = ({ section }: { section: SectionType }) => {
         {section.title}
       </Text>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>
         <Text style={[Fonts.sansNormal, GlobalStyles.textColorPrimary]}>
-          {" "}
-          View more{" "}
+          View more
         </Text>
       </TouchableOpacity>
     </View>

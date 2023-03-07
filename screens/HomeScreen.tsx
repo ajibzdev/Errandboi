@@ -4,6 +4,7 @@ import GlobalStyles from "../GlobalStyles";
 import DisplayCard from "../components/Display/DisplayCard";
 import Feed from "../components/Feed/Feed";
 import FullTextInput from "../components/shared/FullTextInput";
+import Sections from "../data/Sections";
 
 const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = React.useState<string>("");
@@ -19,7 +20,7 @@ const HomeScreen = () => {
 
         <View style={styles.seperator} />
       </View>
-      <Feed />
+      <Feed Sections={Sections} />
     </View>
   );
 };

@@ -46,6 +46,7 @@ const StoreAvailableHours: React.FC<AvailableHoursType> = ({
             setOpenTimeModal(false);
           }}
           value={openingHours}
+          // @ts-ignore
           ref={openingRef}
         />
       ) : null}
@@ -57,6 +58,7 @@ const StoreAvailableHours: React.FC<AvailableHoursType> = ({
             setCloseTimeModal(false);
           }}
           value={closingHours}
+          // @ts-ignore
           ref={closingRef}
         />
       ) : null}

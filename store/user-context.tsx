@@ -18,6 +18,7 @@ export const UserContext = createContext<UserContextType>({
     token: "",
     hasVisited: false,
     faceIdEnabled: false,
+    account: [],
   },
   userDetailsChange: (user: UserType) => {},
   setUserType: (type: "User" | "Courier" | "Food service") => {},
@@ -36,6 +37,7 @@ export default function UserContextProvider({
     userType: "",
     token: "",
     hasVisited: false,
+    account: [],
     faceIdEnabled: false,
   });
 

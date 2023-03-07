@@ -8,6 +8,12 @@ export function numberWithCommasAnd2dp(x: any) {
   return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export const setInputWithComma = (e: any, setState: any) => {
+  let stripped = e.replace(/,/g, "");
+
+  setState(numberWithCommas(stripped));
+};
+
 export function parsePhoneNumber(n: any) {
   n = n.replace(/\s/g, "");
 
