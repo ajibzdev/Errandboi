@@ -1,4 +1,9 @@
-import { StyleSheet, Text, View, Switch } from "react-native";
+import { StyleSheet, Text, View,
+  Alert, 
+  // @ts-ignore
+  Switch,
+  ActivityIndicator
+ } from "react-native";
 import React from "react";
 import GlobalStyles from "../GlobalStyles";
 import Fonts from "../constants/Fonts";
@@ -9,11 +14,19 @@ import Card from "../assets/icons/CardIcon.svg";
 import Location from "../assets/icons/LocationBlackIcon.svg";
 import Trash from "../assets/icons/TrashBlackIcon.svg";
 import Exit from "../assets/icons/ExitIcon.svg";
+import { AuthContext } from "../store/auth-context";
 
 const AccountScreen: React.FC<ScreenNavigationType> = ({
   navigation,
   route,
 }) => {
+  // Contexts
+  const authCtx = React.useContext(AuthContext);
+
+  // Booleans
+  const [loggingOut, setLoggingOut] = React.useState<boolean>(false);
+
+
   // Refs
   const accountInfoRef = React.useRef<any>();
   const paymentRef = React.useRef<any>();
@@ -23,6 +36,22 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
   const faceIdRef = React.useRef<any>();
 
   const [faceIDEnabled, setFaceIDEnabled] = React.useState<boolean>(false);
+
+
+  // Funcitons
+
+  const handleSignout = async () => {
+    setLoggingOut(() => true);
+
+    await authCtx.logout(authCtx.refresh);
+
+    setLoggingOut(() => false);
+  }
+
+  if(loggingOut) {
+
+    return <ActivityIndicator />
+  }
 
   return (
     <View style={[GlobalStyles.root, GlobalStyles.paddingHorizontalLarge]}>
@@ -66,7 +95,20 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
       />
       <Box
         heading="Sign out"
-        _onPress={() => {}}
+        _onPress={() => {
+          Alert.alert("Are you sure you want to signout ?", "", [{
+            text: "Cancel",
+            onPress: () => {}, 
+            style: "default",
+          }, {
+            text: "Sign out",
+            onPress: () => {
+              handleSignout();
+
+            }, 
+            style: "destructive",
+          }])
+        }}
         icon={<Exit />}
         ref={accountInfoRef}
         notOpen={true}
@@ -82,7 +124,7 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
           rightElement={
             <Switch
               value={faceIDEnabled}
-              onValueChange={(value) => setFaceIDEnabled(value)}
+              onValueChange={(value: any) => setFaceIDEnabled(value)}
               style={{ marginLeft: "auto" }}
             />
           }

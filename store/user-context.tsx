@@ -4,7 +4,7 @@ import { UserType } from "../types";
 
 type UserContextType = {
   user: UserType;
-  setUserType: (type: "User" | "Courier" | "Food service") => void;
+  setUserType: (type: "User" | "Courier" | "FoodProvider") => void;
   userDetailsChange: (user: UserType) => void;
 };
 
@@ -21,7 +21,7 @@ export const UserContext = createContext<UserContextType>({
     account: [],
   },
   userDetailsChange: (user: UserType) => {},
-  setUserType: (type: "User" | "Courier" | "Food service") => {},
+  setUserType: (type: "User" | "Courier" | "FoodProvider") => {},
 });
 
 export default function UserContextProvider({
@@ -51,7 +51,7 @@ export default function UserContextProvider({
     }
   };
 
-  const setUserType = async (type: "User" | "Courier" | "Food service") => {
+  const setUserType = async (type: "User" | "Courier" | "FoodProvider") => {
     const u: UserType = user;
     u.userType = type;
     setUser((prev) => u);

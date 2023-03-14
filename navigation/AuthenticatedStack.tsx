@@ -83,7 +83,7 @@ const AuthenticatedStack = () => {
         </>
       ) : null}
 
-      {userCtx.user.userType !== "Food service" ? (
+      {userCtx.user.userType === "FoodProvider" ? (
         <>
           {/* <Stack.Screen
             name="StoreDetailsScreen"

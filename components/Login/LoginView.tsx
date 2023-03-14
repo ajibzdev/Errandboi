@@ -2,7 +2,9 @@ import {
   StyleSheet,
   Text,
   View,
+  // @ts-ignore
   Keyboard,
+  // @ts-ignore
   Alert,
   TouchableOpacity,
 } from "react-native";
@@ -25,7 +27,7 @@ import {
 import FullWidthButton from "../shared/FullWidthButton";
 import Colors, { Shadows } from "../../constants/Colors";
 import Bio from "../../assets/icons/BiometricsIcon.svg";
-import { postToEndpoint } from "../../api/responseHandler";
+import { postToEndpoint, postWithForm } from "../../api/responseHandler";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
@@ -33,6 +35,8 @@ import API from "../../api/API";
 import AuthContextProvider, { AuthContext } from "../../store/auth-context";
 import axios from "axios";
 import { UserContext } from "../../store/user-context";
+import ImagePicker from "../shared/ImagePicker";
+import { createFormData } from "../../utils/handleImages";
 
 const LoginView: React.FC<ScreenNavigationType> = ({}) => {
   const navigation = useNavigation();
@@ -60,6 +64,11 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
     confirmPassword: "Must confirm password",
   });
 
+  // Face
+  const [face, setFace] = React.useState<any>(null);
+
+  // Functions
+
   const handleEmail = (e: string) => {
     setEmail(e);
     handleEmailError(e, errors, setErrors, setErrorMsgs);
@@ -69,19 +78,26 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
     // handlePasswordError(e, errors, setErrors, setErrorMsgs);
   };
 
+  const handleFaceId = () => {
+    // @ts-ignore
+    navigation.navigate("FaceIdScreen");
+  };
+
   const loginHandler = async () => {
     setLoading(() => true);
 
-    const reqData = {
-      email,
-      password,
-    };
-
     try {
+      axios.defaults.headers.common.Authorization = ``;
+
+      const reqData = {
+        email,
+        password,
+      };
+
       const response = await postToEndpoint(API.login, reqData);
 
       if (!response) {
-        Alert.alert("Error", `Username or password is invalid`, [
+        Alert.alert("Error", `Email or password is invalid`, [
           {
             text: "Okay",
             onPress: () => {},
@@ -97,7 +113,7 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
         u.token = response.token;
 
         userCtx.userDetailsChange(u);
-        authCtx.authenticate(response.access);
+        authCtx.authenticate(response.access, response.refresh);
       }
       console.log(response);
     } catch (err: any) {
@@ -114,13 +130,31 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
     // handlePasswordError(password, errors, setErrors, setErrorMsgs);
 
     // @ts-ignore
-    navigation.navigate("WelcomeScreen");
+    // navigation.navigate("WelcomeScreen");
 
-    // await loginHandler();
+    await loginHandler();
   };
+
+  if (face) {
+    console.log(face);
+    (async () => {
+      try {
+        // setLoading(() => true);
+        const payload = createFormData(face, {}, "face");
+        console.log(payload);
+
+        const res = await postWithForm(API.faceLogin, payload);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+      // setLoading(() => false);
+    })();
+  }
 
   return (
     <View style={[GlobalStyles.root]}>
+      {/* @ts-ignore */}
       <KeyboardAwareScrollView style={[styles.mainContainer]}>
         <View style={[styles.textContainer]}>
           <Text style={[Fonts.sansH1]}>Welcome back!</Text>
@@ -170,7 +204,11 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
             onPress={handleSubmit}
             label="Login"
             disabled={
-              errors.email || errors.password || email == "" || password == ""
+              errors.email ||
+              errors.password ||
+              email == "" ||
+              password == "" ||
+              loading == true
             }
             loading={loading}
           />
@@ -196,20 +234,23 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
               GlobalStyles.marginVerticalExtraLarge,
             ]}
           >
-            <TouchableOpacity
-              disabled={email == "" || password == ""}
-              style={[
-                GlobalStyles.flexRow,
-                GlobalStyles.justifySpaceBetween,
-                GlobalStyles.paddingHorizontalLarge,
-                GlobalStyles.paddingVerticalLarge,
-                Shadows.lightShadow,
-                styles.bio,
-              ]}
-            >
-              <Text style={[Fonts.sansRegular]}>Continue with Face ID</Text>
-              <Bio height={25} width={25} />
-            </TouchableOpacity>
+            <ImagePicker setPickedImage={setFace} pickedImage={face}>
+              <View
+                disabled={email == "" || password == ""}
+                style={[
+                  GlobalStyles.flexRow,
+                  GlobalStyles.justifySpaceBetween,
+                  GlobalStyles.paddingHorizontalLarge,
+                  GlobalStyles.paddingVerticalLarge,
+                  Shadows.lightShadow,
+                  styles.bio,
+                ]}
+                onPress={handleFaceId}
+              >
+                <Text style={[Fonts.sansRegular]}>Continue with Face ID</Text>
+                <Bio height={25} width={25} />
+              </View>
+            </ImagePicker>
           </View>
         </View>
       </KeyboardAwareScrollView>

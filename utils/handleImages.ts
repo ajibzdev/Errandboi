@@ -37,7 +37,7 @@ export const createFormData = (
 ) => {
   const data: any = new FormData();
   try {
-    if (photo.length > 1) {
+    if (photo.length > 1 && typeof photo == "object") {
       photo.forEach((item: any) => {
         // let uri;
         // let myAssetId;

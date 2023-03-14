@@ -29,6 +29,8 @@ export type AuthStackParamList = {
   WelcomeScreen: undefined;
   AccountSelectionScreen: undefined;
   OtpScreen: undefined;
+  FaceIdScreen: undefined;
+
 };
 
 export type AuthenticatedStackParamList = {
@@ -146,7 +148,7 @@ export type UserType = {
   lastName: StringType;
   email: StringType;
   mobileNumber: StringType;
-  userType: "User" | "Courier" | "Food service" | "";
+  userType: "User" | "Courier" | "FoodProvider" | "";
   token: StringType;
   hasVisited: boolean;
   faceIdEnabled?: boolean;

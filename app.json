@@ -27,6 +27,14 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(Errandboi) to access your camera."
+        }
+      ]
+    ]
   }
 }
