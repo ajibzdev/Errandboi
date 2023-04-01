@@ -8,6 +8,7 @@ import { StateType } from "../../types";
 import FullWidthButton from "../shared/FullWidthButton";
 // @ts-ignore
 import DateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
 
 type AvailableHoursType = {
   openingHours: any;
@@ -50,6 +51,7 @@ const StoreAvailableHours: React.FC<AvailableHoursType> = ({
           ref={openingRef}
         />
       ) : null}
+
       {closeTimeModal ? (
         <DateTimePicker
           mode="time"
@@ -91,23 +93,24 @@ const StoreAvailableHours: React.FC<AvailableHoursType> = ({
           placeholder="9:00AM"
           onChangeText={setOpening}
           ref={openingRef}
-          value={openingHours}
+          value={moment(openingHours).format("HH:mm A").toString()}
           width={"40%"}
           dropdown={true}
           tapFunction={() => {
             setOpenTimeModal(() => true);
           }}
         />
+
         <AuthInput
           label="Closing Time"
           placeholder="10:00PM"
           onChangeText={setClosing}
           ref={closingRef}
           dropdown={true}
-          value={closingHours}
+          value={moment(closingHours).format("HH:mm A").toString()}
           width={"40%"}
           tapFunction={() => {
-            setOpenTimeModal(() => true);
+            setCloseTimeModal(() => true);
           }}
         />
       </View>

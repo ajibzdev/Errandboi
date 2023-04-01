@@ -17,6 +17,8 @@ declare global {
 }
 
 export type RootStackParamList = {
+  AuthStack: undefined;
+  AuthenticatedStack: undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
@@ -30,7 +32,6 @@ export type AuthStackParamList = {
   AccountSelectionScreen: undefined;
   OtpScreen: undefined;
   FaceIdScreen: undefined;
-
 };
 
 export type AuthenticatedStackParamList = {
@@ -48,6 +49,7 @@ export type AuthenticatedStackParamList = {
   DeleteAccountScreen: undefined;
   SetNewPasswordScreen: undefined;
   ViewMoreScreen: undefined;
+  LoadingScreenTemp: undefined;
 
   // Food Service
   StoreDetailsScreen: undefined;
@@ -107,7 +109,7 @@ export type LoginType = {
 export type DisplayCardType = {
   image: string;
   label: string;
-  price?: string;
+  price: string;
   location: string;
   status?: boolean;
   isFood?: boolean;
@@ -146,20 +148,28 @@ type accountType = {
 export type UserType = {
   firstName: StringType;
   lastName: StringType;
+  picture?: string;
+  name: string;
   email: StringType;
   mobileNumber: StringType;
   userType: "User" | "Courier" | "FoodProvider" | "";
-  token: StringType;
+  id: StringType;
   hasVisited: boolean;
   faceIdEnabled?: boolean;
   account: accountType[];
 };
 
+// Category
+export type CategoryType = {
+  id: string;
+  name: string;
+};
+// Product
 export type ProductType = {
   _id?: string;
   label: string;
   price: string;
-  count: number | null;
+  count: number;
   image: string;
 };
 

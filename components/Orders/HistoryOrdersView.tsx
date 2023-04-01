@@ -14,18 +14,20 @@ const HistoryOrdersView = () => {
         data={shopOrders}
         renderItem={({ item }) => {
           return (
-            <FoodServiceOrderItem
-              isHistory={true}
-              delivered={item.delivered}
-              pending={item.pending}
-              items={item.items}
-              totalPrice={item.totalPrice}
-              numberOfItems={item.items.length}
-              orderId={item.orderId}
-              orderedBy={item.orderedBy}
-              openingPickupTime={item.openingPickupTime}
-              closingPickupTime={item.closingPickupTime}
-            />
+            // <FoodServiceOrderItem
+            //   isHistory={true}
+            //   delivered={item.delivered}
+            //   pending={item.pending}
+            //   items={item.items}
+            //   totalPrice={item.totalPrice}
+            //   numberOfItems={item.items.length}
+            //   orderId={item.orderId}
+            //   orderedBy={item.orderedBy}
+            //   openingPickupTime={item.openingPickupTime}
+            //   closingPickupTime={item.closingPickupTime}
+            // />
+
+            <View />
           );
         }}
       />

@@ -31,6 +31,7 @@ interface authInputProps {
   dropdown?: boolean;
   keyboardType?: KeyboardTypeOptions;
   tapFunction?: () => void;
+  caretHidden?: boolean;
 }
 
 const AuthInput: React.FC<authInputProps> = React.forwardRef(
@@ -47,6 +48,7 @@ const AuthInput: React.FC<authInputProps> = React.forwardRef(
       required,
       isTextInputVisible,
       width,
+      caretHidden,
       dropdown,
       tapFunction,
       keyboardType,
@@ -101,6 +103,7 @@ const AuthInput: React.FC<authInputProps> = React.forwardRef(
               }}
               keyboardType={keyboardType}
               onSubmitEditing={onSubmitEditing}
+              caretHidden={caretHidden}
               //   @ts-ignore
               ref={ref}
               {...props}

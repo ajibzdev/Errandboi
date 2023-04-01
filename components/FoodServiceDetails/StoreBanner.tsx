@@ -12,15 +12,14 @@ import Colors from "../../constants/Colors";
 import { handleProfilePicture } from "../../utils/handleImages";
 import ProfilePicture from "../shared/ProfilePicture";
 
-const StoreBanner: React.FC<StateType> = ({
+const StoreBanner: React.FC<any> = ({
   setValue,
   value,
   refObj,
   setActiveIndex,
   handleSubmit,
+  loading,
 }) => {
-  const [loading, setLoading] = React.useState<boolean>(false);
-
   return (
     <View
       style={[GlobalStyles.alignCenter, GlobalStyles.paddingHorizontalLarge]}
@@ -72,13 +71,10 @@ const StoreBanner: React.FC<StateType> = ({
 
       <FullWidthButton
         label="Go to profile"
+        loading={loading}
         onPress={async () => {
-          setLoading(() => true);
-          handleSubmit && (await handleSubmit());
-
-          setLoading(() => false);
+          handleSubmit && handleSubmit();
         }}
-        disabled={value === "" || value === null}
       />
 
       <Text

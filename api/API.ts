@@ -11,4 +11,19 @@ export default {
   faceLogin: `${URL}/account/face-login/`,
 
   logout: `${URL}/account/logout/`,
+
+  // Food service
+  foodService: `${URL}/foodservice/`,
+  allFoodService: `${URL}/foodservice/all/`,
+  registerFoodService: `${URL}/foodservice/register/`,
+
+  // Product
+  addProduct: `${URL}/product/add-product/`,
+  myProduct: `${URL}/product/myproducts/`,
+  getProduct: `${URL}/product/`,
+  allProduct: `${URL}/product/all/`,
+
+  // Category
+  addCategory: `${URL}/product/add-category/`,
+  getCategory: `${URL}/product/category/`,
 };

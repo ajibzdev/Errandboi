@@ -33,28 +33,24 @@ export default function AuthContextProvider({
 
     AsyncStorage.setItem("token", token);
     AsyncStorage.setItem("refresh", refresh);
-    
   }
 
   async function logout(refresh: string) {
     try {
       const res = await postToEndpoint(API.logout, {
-        refresh,
-      })
+        refresh: refreshToken,
+      });
       console.log(res);
 
       await AsyncStorage.removeItem("token");
       await AsyncStorage.removeItem("refresh");
 
-      setAuthToken(null);
-      setRefreshToken(null);
-    } catch(err) {
-      console.log(err)
+      setAuthToken(() => null);
+      setRefreshToken(() => null);
+    } catch (err: any) {
+      console.log(err.response);
+      throw new Error("While Auth Log out was called");
     }
-    
-
-
-
   }
 
   const value = {

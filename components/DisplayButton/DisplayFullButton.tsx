@@ -10,6 +10,7 @@ import { DisplayButtonType } from "../../types";
 import { CartContext } from "../../store/cart-context";
 
 const DisplayFullButton = ({ count, product }: DisplayButtonType) => {
+  // Contexts
   const cartCtx = React.useContext(CartContext);
 
   const addHandler = () => {
@@ -21,6 +22,7 @@ const DisplayFullButton = ({ count, product }: DisplayButtonType) => {
     // @ts-ignore
     cartCtx.updateCount(product._id, "decrease");
   };
+
   return (
     <View style={[GlobalStyles.flexRow, styles.button]}>
       <TouchableOpacity

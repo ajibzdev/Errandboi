@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CartType, ProductType, UserType } from "../types";
 
@@ -7,6 +7,7 @@ type CartContextType = {
   addToCart: ({}: ProductType) => void;
   deleteFromCart: (_id: string) => void;
   getCart: () => void;
+  emptyCart: () => void;
   getProductCount: (_id: string | undefined) => number;
   updateCount: (_id: string, action: "increase" | "decrease") => void;
 };
@@ -16,8 +17,9 @@ export const CartContext = createContext<CartContextType>({
   addToCart: ({}: ProductType) => {},
   deleteFromCart: (_id: string) => {},
   getCart: () => {},
+  emptyCart: () => {},
   updateCount: (_id: string, action: "increase" | "decrease") => {},
-  getProductCount: (_id: string | undefined) => {},
+  getProductCount: (_id: string | undefined) => 0,
 });
 
 export default function CartContextProvider({
@@ -25,30 +27,49 @@ export default function CartContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [cart, setCart] = useState<ProductType[]>([]);
+  const [cart, setCart] = useState([]);
+  const [productArr, setProductArr] = React.useState([]);
+
+  const cartRef: any = React.useRef<any>(null);
 
   const getCart = async () => {
     const cart = await AsyncStorage.getItem("@cart");
 
-    if (cart !== null) {
-      setCart((prev) => JSON.parse(cart));
-    } else {
-      console.log("Cart Is Empty");
-
-      setCart(() => []);
-    }
+    setCart(() => JSON.parse(cart) || []);
   };
 
   const addToCart = async (product: ProductType) => {
-    setCart((prev) => [...prev, product]);
+    try {
+      setCart((prev) => {
+        return [...prev, product];
+      });
 
-    await AsyncStorage.setItem("@cart", JSON.stringify(cart));
-    await getCart();
+      console.log(cart);
+
+      cartRef.current = [product];
+
+      await AsyncStorage.setItem("@cart", JSON.stringify(cart));
+      // await getCart();
+    } catch (err: any) {
+      console.log(err);
+      throw new Error("Error while adding to cart from ctx");
+    }
   };
+
+  const emptyCart = async () => {
+    try {
+      setCart(() => []);
+      AsyncStorage.removeItem("@cart");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const deleteFromCart = async (_id: string) => {
-    setCart((prev) => prev.filter((item) => item._id !== _id));
+    setCart((prev) => prev.filter((item: ProductType) => item._id !== _id));
 
     await AsyncStorage.setItem("@cart", JSON.stringify(cart));
+
     await getCart();
   };
 
@@ -100,6 +121,7 @@ export default function CartContextProvider({
     addToCart,
     deleteFromCart,
     getCart,
+    emptyCart,
     updateCount,
     getProductCount,
   };

@@ -6,6 +6,7 @@ import Sizes from "../../constants/Sizes";
 import AuthInput from "../shared/AuthInput";
 import { StateType } from "../../types";
 import FullWidthButton from "../shared/FullWidthButton";
+import { capitalizeSentence } from "../../utils/utilityFunctions";
 
 const StoreNameView: React.FC<StateType> = ({
   value,
@@ -32,7 +33,7 @@ const StoreNameView: React.FC<StateType> = ({
         placeholder="e.g., BGH Restaurant"
         onChangeText={setValue}
         ref={refObj}
-        value={value}
+        value={capitalizeSentence(value)}
         width={"93%"}
       />
 

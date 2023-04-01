@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -25,6 +26,8 @@ import {
 } from "../../utils/utilityFunctions";
 import BottomShadow from "../../components/shared/BottomShadow";
 import FullWidthButton from "../../components/shared/FullWidthButton";
+import { getEndpoint } from "../../api/responseHandler";
+import API from "../../api/API";
 
 const EditProductScreen: React.FC<ScreenNavigationType> = ({
   navigation,
@@ -36,6 +39,7 @@ const EditProductScreen: React.FC<ScreenNavigationType> = ({
   // States
   const [value, setValue] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+  const [fetching, setFetching] = React.useState<boolean>(false);
 
   //   Product State
   const [productTitle, setProductTitle] = React.useState<StringType>(null);
@@ -46,9 +50,34 @@ const EditProductScreen: React.FC<ScreenNavigationType> = ({
   const productTitleRef = React.useRef<any>();
   const productPriceRef = React.useRef<any>();
   const categoryRef = React.useRef<any>();
+  const resultRef = React.useRef<any>(null);
 
+  // Handlers
+  const getProductDetails = async () => {
+    try {
+      setFetching(() => true);
+
+      const res = await getEndpoint(`${API.getProduct}${id}`);
+      console.log(res);
+      resultRef.current = res;
+      setFetching(() => false);
+      console.log(res);
+    } catch (err: any) {
+      setFetching(() => false);
+      console.log(err.response);
+    }
+  };
   //   Submit
   const handleSubmit = async () => {};
+
+  // use Effects
+  React.useEffect(() => {
+    getProductDetails();
+  }, []);
+
+  if (fetching) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <SafeAreaView style={[GlobalStyles.root]}>

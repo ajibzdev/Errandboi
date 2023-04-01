@@ -7,8 +7,37 @@ import Plus from "../../assets/icons/PlusIcon.svg";
 import Minus from "../../assets/icons/MinusIcon.svg";
 import Trash from "../../assets/icons/TrashMiniIcon.svg";
 import Fonts from "../../constants/Fonts";
+import { ProductType } from "../../types";
+import { CartContext } from "../../store/cart-context";
 
-const CartFullButton = ({ count }: { count: number }) => {
+const CartFullButton = ({
+  count,
+  product,
+}: {
+  count: number;
+  product: ProductType;
+}) => {
+  // Contexts
+  const cartCtx = React.useContext(CartContext);
+
+  // Handlers
+  // Update Prouct Count
+  const addHandler = () => {
+    // @ts-ignore
+    cartCtx.updateCount(product._id, "increase");
+  };
+
+  // Reduce Product Count
+  const deleteHandler = () => {
+    // @ts-ignore
+    cartCtx.updateCount(product._id, "decrease");
+  };
+
+  const deleteFromCartHandler = () => {
+    // @ts-ignore
+    cartCtx.deleteFromCart(product._id);
+  };
+
   return (
     <View
       style={[
@@ -18,8 +47,13 @@ const CartFullButton = ({ count }: { count: number }) => {
         Shadows.shadowLight,
       ]}
     >
-      <TouchableOpacity style={[styles.icon, GlobalStyles.flexCenter]}>
-        {count == 1 ? (
+      <TouchableOpacity
+        style={[styles.icon, GlobalStyles.flexCenter]}
+        onPress={() => {
+          product.count == 1 ? deleteFromCartHandler() : deleteHandler();
+        }}
+      >
+        {product.count == 1 ? (
           <Trash width={10} height={12} />
         ) : (
           <Minus height={10} width={12} />
@@ -33,9 +67,12 @@ const CartFullButton = ({ count }: { count: number }) => {
           GlobalStyles.textAlignCenter,
         ]}
       >
-        {count}
+        {product.count}
       </Text>
-      <TouchableOpacity style={[styles.icon, GlobalStyles.flexCenter]}>
+      <TouchableOpacity
+        style={[styles.icon, GlobalStyles.flexCenter]}
+        onPress={addHandler}
+      >
         <Plus height={12} width={12} />
       </TouchableOpacity>
     </View>

@@ -24,6 +24,7 @@ const OrdersTopTab = () => {
         component={NewOrdersView}
         options={{ tabBarLabel: "New Orders" }}
       />
+      
       <Tab.Screen
         name="History"
         options={{ tabBarLabel: "History" }}

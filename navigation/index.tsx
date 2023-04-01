@@ -37,7 +37,18 @@ function RootNavigator() {
   const authCtx = React.useContext(AuthContext);
 
   return (
-    <>{!authCtx.isAuthenticated ? <AuthStack /> : <AuthenticatedStack />}</>
+    <>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {!authCtx.isAuthenticated ? (
+          <Stack.Screen name="AuthStack" component={AuthStack} />
+        ) : null}
+
+        <Stack.Screen
+          name="AuthenticatedStack"
+          component={AuthenticatedStack}
+        />
+      </Stack.Navigator>
+    </>
   );
 }
 

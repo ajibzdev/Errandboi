@@ -5,14 +5,18 @@ import CartItem from "./CartItem";
 import Fonts from "../../constants/Fonts";
 import Sizes from "../../constants/Sizes";
 import GlobalStyles from "../../GlobalStyles";
+import { CartContext } from "../../store/cart-context";
 
 const CartList = () => {
+  // Contexts
+  const cartCtx = React.useContext(CartContext);
+
   return (
     <FlatList
       bounces={false}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
-      data={CartData}
+      data={cartCtx.cart}
       renderItem={({ item }) => <CartItem cart={item} />}
       ListHeaderComponent={() => (
         <Text

@@ -1,9 +1,12 @@
-import { StyleSheet, Text, View,
-  Alert, 
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
   // @ts-ignore
   Switch,
-  ActivityIndicator
- } from "react-native";
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 import GlobalStyles from "../GlobalStyles";
 import Fonts from "../constants/Fonts";
@@ -26,7 +29,6 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
   // Booleans
   const [loggingOut, setLoggingOut] = React.useState<boolean>(false);
 
-
   // Refs
   const accountInfoRef = React.useRef<any>();
   const paymentRef = React.useRef<any>();
@@ -37,7 +39,6 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
 
   const [faceIDEnabled, setFaceIDEnabled] = React.useState<boolean>(false);
 
-
   // Funcitons
 
   const handleSignout = async () => {
@@ -46,12 +47,7 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
     await authCtx.logout(authCtx.refresh);
 
     setLoggingOut(() => false);
-  }
-
-  if(loggingOut) {
-
-    return <ActivityIndicator />
-  }
+  };
 
   return (
     <View style={[GlobalStyles.root, GlobalStyles.paddingHorizontalLarge]}>
@@ -96,20 +92,22 @@ const AccountScreen: React.FC<ScreenNavigationType> = ({
       <Box
         heading="Sign out"
         _onPress={() => {
-          Alert.alert("Are you sure you want to signout ?", "", [{
-            text: "Cancel",
-            onPress: () => {}, 
-            style: "default",
-          }, {
-            text: "Sign out",
-            onPress: () => {
-              handleSignout();
-
-            }, 
-            style: "destructive",
-          }])
+          Alert.alert("Are you sure you want to signout ?", "", [
+            {
+              text: "Cancel",
+              onPress: () => {},
+              style: "default",
+            },
+            {
+              text: "Sign out",
+              onPress: () => {
+                handleSignout();
+              },
+              style: "destructive",
+            },
+          ]);
         }}
-        icon={<Exit />}
+        icon={loggingOut ? <ActivityIndicator /> : <Exit />}
         ref={accountInfoRef}
         notOpen={true}
       />

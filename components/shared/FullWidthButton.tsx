@@ -33,7 +33,6 @@ const FullWidthButton: React.FC<FullWidthButtonType> = ({
   return (
     <View
       style={[
-        GlobalStyles.deviceViewWidth,
         GlobalStyles.paddingHorizontalLarge,
         GlobalStyles.deviceViewWidth,
       ]}

@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, SectionList, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SectionList,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 import Sections from "../../data/Sections";
 import SectionHeader from "./SectionHeader";
@@ -14,6 +21,13 @@ type FeedType = {
   Sections?: any;
 };
 const Feed: React.FC<FeedType> = ({ Sections }) => {
+  // Booleans
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  if (!Sections[0]?.data || !Sections[1]?.data) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <View style={[styles.container]}>
       <SectionList
@@ -26,37 +40,39 @@ const Feed: React.FC<FeedType> = ({ Sections }) => {
           <View style={{ marginBottom: Sizes.medium }} />
         )}
         style={{ marginBottom: 20 }}
-        renderSectionHeader={({ section }) => (
-          <>
-            {/* @ts-ignore */}
-            <SectionHeader section={section} />
+        renderSectionHeader={({ section }) => {
+          return (
+            <>
+              {/* @ts-ignore */}
+              <SectionHeader section={section} />
 
-            <FlatList
-              data={section.data}
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              horizontal
-              // snapToAlignment="center"
-              // decelerationRate={"fast"}
+              <FlatList
+                data={section.data}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                horizontal={true}
+                // snapToAlignment="center"
+                // decelerationRate={"fast"}
+                // snapToInterval={height}
 
-              // snapToInterval={height}
-              renderItem={({ item }) => {
-                // const id = new Date().toString() + Math.random().toString();
+                renderItem={({ item, index }) => {
+                  // const id = new Date().toString() + Math.random().toString();
 
-                return (
-                  <DisplayCard
-                    // _id={id}
-                    image={item.image}
-                    label={item.label}
-                    location={item.location}
-                    price={item.price}
-                    isFood={item.isFood}
-                  />
-                );
-              }}
-            />
-          </>
-        )}
+                  return (
+                    <DisplayCard
+                      _id={item.product_id}
+                      image={item.image}
+                      label={item.name}
+                      location={item.location}
+                      price={item.price}
+                      isFood={item.isFood}
+                    />
+                  );
+                }}
+              />
+            </>
+          );
+        }}
         renderItem={({ item }) => {
           return null;
         }}

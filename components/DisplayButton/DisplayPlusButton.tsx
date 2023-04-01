@@ -5,7 +5,7 @@ import Pencil from "../../assets/icons/PencilIcon.svg";
 import GlobalStyles from "../../GlobalStyles";
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
-import { DisplayButtonType } from "../../types";
+import { DisplayButtonType, ProductType } from "../../types";
 import { CartContext } from "../../store/cart-context";
 import { useNavigation } from "@react-navigation/native";
 
@@ -18,17 +18,17 @@ const DisplayPlusButton: React.FC<DisplayButtonType> = ({
   const navigation = useNavigation();
 
   const addHandler = () => {
+    const productC: ProductType = {
+      count: ++count,
+      image: product.image,
+      label: product.label,
+      price: product?.price,
+      _id: product._id,
+    };
     shopOwner
       ? // @ts-ignore
         navigation.navigate("EditProductScreen", { id: product._id })
-      : cartCtx.addToCart({
-          count: ++count,
-          image: product.image,
-          label: product.label,
-          // @ts-ignore
-          price: product.price,
-          _id: product._id,
-        });
+      : cartCtx.addToCart(productC);
   };
 
   return (

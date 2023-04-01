@@ -27,7 +27,11 @@ import {
 import FullWidthButton from "../shared/FullWidthButton";
 import Colors, { Shadows } from "../../constants/Colors";
 import Bio from "../../assets/icons/BiometricsIcon.svg";
-import { postToEndpoint, postWithForm } from "../../api/responseHandler";
+import {
+  getEndpoint,
+  postToEndpoint,
+  postWithForm,
+} from "../../api/responseHandler";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
@@ -67,6 +71,11 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
   // Face
   const [face, setFace] = React.useState<any>(null);
 
+  // Controller
+  const controller: any = React.useMemo(() => {
+    new AbortController();
+  }, []);
+
   // Functions
 
   const handleEmail = (e: string) => {
@@ -105,22 +114,69 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
         ]);
       } else {
         axios.defaults.headers.common.Authorization = `Bearer ${response.access}`;
+        console.log(response);
         userCtx.setUserType(response.type);
 
         const u = userCtx.user;
 
         u.email = email;
-        u.token = response.token;
+        u.id = "";
 
         userCtx.userDetailsChange(u);
+
+        // Check if user has submitted details
+        if (userCtx.user.userType == "FoodProvider") {
+          const detail = await getEndpoint(API.foodService);
+          console.log(detail);
+
+          if (detail?.name) {
+            const u = userCtx.user;
+            u.id = detail?.id;
+            u.hasVisited = true;
+
+            userCtx.userDetailsChange(u);
+          }
+        }
+
         authCtx.authenticate(response.access, response.refresh);
       }
-      console.log(response);
     } catch (err: any) {
+      setLoading(() => false);
       console.log(err.message);
     }
 
     setLoading(() => false);
+  };
+
+  const handleSubmitWithFace = async () => {
+    try {
+      if (face) {
+        try {
+          setLoading(() => true);
+          const payload = createFormData(
+            face,
+            { email: userCtx.user.email },
+            "face"
+          );
+
+          const res = await postWithForm(
+            API.faceLogin,
+            payload,
+            controller?.signal
+          );
+          console.log(res);
+          console.log(controller?.signal);
+          setLoading(() => false);
+        } catch (err) {
+          setLoading(() => false);
+          console.log(err);
+        }
+      }
+    } catch (err: any) {
+      console.log(err.response);
+
+      throw new Error("Something went wrong");
+    }
   };
 
   const handleSubmit = async () => {
@@ -135,27 +191,27 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
     await loginHandler();
   };
 
-  if (face) {
-    console.log(face);
-    (async () => {
-      try {
-        // setLoading(() => true);
-        const payload = createFormData(face, {}, "face");
-        console.log(payload);
+  // Use Effects
 
-        const res = await postWithForm(API.faceLogin, payload);
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-      // setLoading(() => false);
-    })();
-  }
+  React.useEffect(() => {
+    const checkOnline = () => {
+      console.log("Connected");
+    };
+
+    return () => {
+      console.log("disconnected");
+      controller?.abort();
+      setLoading(() => false);
+    };
+  }, [controller]);
+  React.useEffect(() => {
+    handleSubmitWithFace();
+  }, [face]);
 
   return (
     <View style={[GlobalStyles.root]}>
       {/* @ts-ignore */}
-      <KeyboardAwareScrollView style={[styles.mainContainer]}>
+      <KeyboardAwareScrollView style={[styles.mainContainer]} bounces={false}>
         <View style={[styles.textContainer]}>
           <Text style={[Fonts.sansH1]}>Welcome back!</Text>
           <Text
@@ -236,7 +292,7 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
           >
             <ImagePicker setPickedImage={setFace} pickedImage={face}>
               <View
-                disabled={email == "" || password == ""}
+                // disabled={email == "" || password == ""}
                 style={[
                   GlobalStyles.flexRow,
                   GlobalStyles.justifySpaceBetween,
@@ -245,7 +301,7 @@ const LoginView: React.FC<ScreenNavigationType> = ({}) => {
                   Shadows.lightShadow,
                   styles.bio,
                 ]}
-                onPress={handleFaceId}
+                // onPress={handleFaceId}
               >
                 <Text style={[Fonts.sansRegular]}>Continue with Face ID</Text>
                 <Bio height={25} width={25} />

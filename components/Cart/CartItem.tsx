@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import GlobalStyles from "../../GlobalStyles";
 import CartCount from "./CartCount";
@@ -7,6 +7,8 @@ import CartFullButton from "./CartFullButton";
 import Trash from "../../assets/icons/TrashIcon.svg";
 import { Shadows } from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
+import { ProductType } from "../../types";
+import { CartContext } from "../../store/cart-context";
 
 type CartItem = {
   label: string;
@@ -15,10 +17,19 @@ type CartItem = {
   count: number;
 };
 type CartItemType = {
-  cart: CartItem;
+  cart: ProductType;
 };
 
 const CartItem = ({ cart }: CartItemType) => {
+  // Contexts
+  const cartCtx = React.useContext(CartContext);
+
+  // Handlers
+  // Delete product from cart
+  const deleteFromCartHandler = () => {
+    // @ts-ignore
+    cartCtx.deleteFromCart(cart._id);
+  };
   return (
     <View
       style={[
@@ -33,7 +44,7 @@ const CartItem = ({ cart }: CartItemType) => {
     >
       <View style={[styles.imageContainer]}>
         <Image
-          source={require("../../assets/images/FoodImage.png")}
+          source={{ uri: cart?.image }}
           resizeMode={"cover"}
           style={styles.image}
           //   source={{uri: cart.image}}
@@ -69,10 +80,12 @@ const CartItem = ({ cart }: CartItemType) => {
             {cart.price}
           </Text>
         </View>
-        <CartFullButton count={cart.count} />
+        <CartFullButton count={cart.count} product={cart} />
       </View>
 
-      <Trash height={18} width={16} />
+      <TouchableOpacity onPress={deleteFromCartHandler}>
+        <Trash height={18} width={16} />
+      </TouchableOpacity>
     </View>
   );
 };

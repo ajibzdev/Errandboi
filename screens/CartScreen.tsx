@@ -12,10 +12,15 @@ import BottomShadow from "../components/shared/BottomShadow";
 import Sizes from "../constants/Sizes";
 import FullSeperatedButton from "../components/shared/FullSeperatedButton";
 import { useNavigation } from "@react-navigation/native";
+import { CartContext } from "../store/cart-context";
 
 const CartScreen = () => {
-  const cartLength = CartData.length;
+  const cartCtx = React.useContext(CartContext);
+
+  const cartLength = cartCtx.cart.length;
   const navigation = useNavigation();
+
+  // Functions
 
   const handleSubmit = async () => {
     // @ts-ignore

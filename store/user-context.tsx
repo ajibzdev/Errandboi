@@ -15,7 +15,8 @@ export const UserContext = createContext<UserContextType>({
     lastName: "",
     mobileNumber: "",
     userType: "",
-    token: "",
+    id: "",
+    name: "",
     hasVisited: false,
     faceIdEnabled: false,
     account: [],
@@ -35,8 +36,10 @@ export default function UserContextProvider({
     lastName: "",
     mobileNumber: "",
     userType: "",
-    token: "",
+    id: "",
     hasVisited: false,
+    name: "",
+    picture: "",
     account: [],
     faceIdEnabled: false,
   });
@@ -55,6 +58,7 @@ export default function UserContextProvider({
     const u: UserType = user;
     u.userType = type;
     setUser((prev) => u);
+    console.log(type);
 
     await AsyncStorage.setItem("@user", JSON.stringify(user));
     await getUser();

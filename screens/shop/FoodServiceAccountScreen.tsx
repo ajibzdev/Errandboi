@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, Switch, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Switch,
+  ScrollView,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 import React from "react";
 import GlobalStyles from "../../GlobalStyles";
 import Fonts from "../../constants/Fonts";
@@ -9,11 +17,18 @@ import Card from "../../assets/icons/CardIcon.svg";
 import Location from "../../assets/icons/LocationBlackIcon.svg";
 import Trash from "../../assets/icons/TrashBlackIcon.svg";
 import Exit from "../../assets/icons/ExitIcon.svg";
+import { AuthContext } from "../../store/auth-context";
 
 const FoodServiceAccountScreen: React.FC<ScreenNavigationType> = ({
   navigation,
   route,
 }) => {
+  // Contexts
+  const authCtx = React.useContext(AuthContext);
+
+  // Booleans
+  const [loggingOut, setLoggingOut] = React.useState<boolean>(false);
+
   // Refs
   const accountInfoRef = React.useRef<any>();
   const paymentRef = React.useRef<any>();
@@ -23,6 +38,14 @@ const FoodServiceAccountScreen: React.FC<ScreenNavigationType> = ({
   const faceIdRef = React.useRef<any>();
 
   const [faceIDEnabled, setFaceIDEnabled] = React.useState<boolean>(false);
+
+  const handleSignout = async () => {
+    setLoggingOut(() => true);
+
+    await authCtx.logout("");
+
+    setLoggingOut(() => false);
+  };
 
   return (
     <ScrollView
@@ -88,8 +111,23 @@ const FoodServiceAccountScreen: React.FC<ScreenNavigationType> = ({
       />
       <Box
         heading="Sign out"
-        _onPress={() => {}}
-        icon={<Exit />}
+        _onPress={() => {
+          Alert.alert("Are you sure you want to signout ?", "", [
+            {
+              text: "Cancel",
+              onPress: () => {},
+              style: "default",
+            },
+            {
+              text: "Sign out",
+              onPress: () => {
+                handleSignout();
+              },
+              style: "destructive",
+            },
+          ]);
+        }}
+        icon={loggingOut ? <ActivityIndicator /> : <Exit />}
         ref={accountInfoRef}
         notOpen={true}
       />

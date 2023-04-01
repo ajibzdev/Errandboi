@@ -6,6 +6,7 @@ import Sizes from "../../constants/Sizes";
 import AuthInput from "../shared/AuthInput";
 import { StateType } from "../../types";
 import FullWidthButton from "../shared/FullWidthButton";
+import { capitalizeSentence } from "../../utils/utilityFunctions";
 const StoreAddressView: React.FC<StateType> = ({
   value,
   setValue,
@@ -37,7 +38,7 @@ const StoreAddressView: React.FC<StateType> = ({
         placeholder="e.g., Guest house babcock"
         onChangeText={setValue}
         ref={refObj}
-        value={value}
+        value={capitalizeSentence(value)}
         width={"93%"}
       />
 

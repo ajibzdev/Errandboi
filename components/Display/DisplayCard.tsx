@@ -70,7 +70,7 @@ const DisplayCard = ({
         />
         <Image
           style={[GlobalStyles.width100, styles.image]}
-          source={require("../../assets/images/FoodImage.png")}
+          source={{ uri: image }}
           resizeMode={"cover"}
         />
 

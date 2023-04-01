@@ -27,6 +27,7 @@ import FoodServiceTransactionScreen from "../screens/shop/FoodServiceTransaction
 import FoodServiceWithdrawScreen from "../screens/shop/FoodServiceWithdrawScreen";
 import FoodServiceStoreScreen from "../screens/shop/FoodServiceStoreScreen";
 import AccountScreen from "../screens/AccountScreen";
+import LoadingScreenTemp from "../screens/LoadingScreenTemp";
 
 const Stack = createStackNavigator<AuthenticatedStackParamList>();
 
@@ -38,6 +39,7 @@ const AuthenticatedStack = () => {
       {userCtx.user.userType === "User" ? (
         <>
           <Stack.Screen name="Home" component={HomeTabs} />
+
           <Stack.Screen name="LocationScreen" component={LocationScreen} />
           {/* Cart */}
           <Stack.Screen name="CartScreen" component={CartScreen} />
@@ -85,10 +87,13 @@ const AuthenticatedStack = () => {
 
       {userCtx.user.userType === "FoodProvider" ? (
         <>
-          {/* <Stack.Screen
-            name="StoreDetailsScreen"
-            component={StoreDetailsScreen}
-          /> */}
+          {!userCtx.user.hasVisited ? (
+            <Stack.Screen
+              name="StoreDetailsScreen"
+              component={StoreDetailsScreen}
+            />
+          ) : null}
+
           <Stack.Screen name="FoodServiceTab" component={FoodServiceTab} />
           <Stack.Screen name="AddProductScreen" component={AddProductScreen} />
           <Stack.Screen
@@ -147,11 +152,14 @@ const AuthenticatedStack = () => {
           />
         </>
       ) : null}
+
       {userCtx.user.userType == "Courier" ? (
         <>
           <Stack.Screen name="Home" component={HomeTabs} />
         </>
       ) : null}
+
+      <Stack.Screen name="LoadingScreenTemp" component={LoadingScreenTemp} />
     </Stack.Navigator>
   );
 };

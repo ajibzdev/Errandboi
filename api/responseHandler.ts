@@ -1,17 +1,21 @@
 import axios from "axios";
 
-export const getEndpoint = async (endpoint: string) => {
+export const getEndpoint = async (endpoint: string, signal: any = null) => {
   try {
-    const res = await axios.get(endpoint);
+    const res = await axios.get(endpoint, { signal: signal });
     return res.data;
   } catch (err: any) {
     console.log(err.message);
   }
 };
 
-export const postToEndpoint = async (endpoint: string, payload: any) => {
+export const postToEndpoint = async (
+  endpoint: string,
+  payload: any,
+  signal: any = null
+) => {
   try {
-    const response = await axios.post(endpoint, payload);
+    const response = await axios.post(endpoint, payload, { signal: signal });
 
     return response.data;
   } catch (err: any) {
@@ -21,9 +25,13 @@ export const postToEndpoint = async (endpoint: string, payload: any) => {
   }
 };
 
-export const putToEndpoint = async (endpoint: any, payload: any) => {
+export const putToEndpoint = async (
+  endpoint: any,
+  payload: any,
+  signal: any = null
+) => {
   try {
-    const response = await axios.put(endpoint, payload);
+    const response = await axios.put(endpoint, payload, { signal: signal });
 
     return response.data;
   } catch (err: any) {
@@ -34,11 +42,15 @@ export const putToEndpoint = async (endpoint: any, payload: any) => {
   }
 };
 
-export const deleteToEndpoint = async (endpoint: any, payload: any = {}) => {
+export const deleteToEndpoint = async (
+  endpoint: any,
+  payload: any = {},
+  signal: any = null
+) => {
   try {
-    console.log(payload);
     const response = await axios.delete(endpoint, {
       data: payload,
+      signal: signal,
     });
 
     return response.data;
@@ -50,9 +62,14 @@ export const deleteToEndpoint = async (endpoint: any, payload: any = {}) => {
   }
 };
 
-export const putWithForm = async (endpoint: string, userData: any) => {
+export const putWithForm = async (
+  endpoint: string,
+  userData: any,
+  signal: any = null
+) => {
   try {
     const response = await axios.put(endpoint, userData, {
+      signal: signal,
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -61,13 +78,18 @@ export const putWithForm = async (endpoint: string, userData: any) => {
     return response.data;
   } catch (err: any) {
     console.log("An error happened while trying to put with form");
-    console.log(err.message);
+    console.log(err);
   }
 };
 
-export const postWithForm = async (endpoint: string, userData: any) => {
+export const postWithForm = async (
+  endpoint: string,
+  userData: any,
+  signal: any = null
+) => {
   try {
     const response = await axios.post(endpoint, userData, {
+      signal: signal,
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -76,6 +98,6 @@ export const postWithForm = async (endpoint: string, userData: any) => {
     return response.data;
   } catch (err: any) {
     console.log("An error happened while trying to post with form");
-    console.log(err.message);
+    console.log(err.response);
   }
 };
