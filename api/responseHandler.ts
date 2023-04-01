@@ -1,4 +1,5 @@
 import axios from "axios";
+import API from "./API";
 
 export const getEndpoint = async (endpoint: string, signal: any = null) => {
   try {
@@ -99,5 +100,16 @@ export const postWithForm = async (
   } catch (err: any) {
     console.log("An error happened while trying to post with form");
     console.log(err.response);
+  }
+};
+
+export const patchToEndpoint = async (endpoint: string, data: any) => {
+  try {
+    const res = await axios.patch(endpoint, data);
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("Response Hanlder: patch");
   }
 };

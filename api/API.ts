@@ -8,9 +8,11 @@ export default {
   faceRegister: `${URL}/account/register-face/`,
 
   login: `${URL}/account/login/`,
+  logout: `${URL}/account/logout/`,
   faceLogin: `${URL}/account/face-login/`,
 
-  logout: `${URL}/account/logout/`,
+  // User
+  getUserDetails: `${URL}/account/profile/`,
 
   // Food service
   foodService: `${URL}/foodservice/`,

@@ -40,7 +40,9 @@ const FullWidthButton: React.FC<FullWidthButtonType> = ({
       <TouchableOpacity
         style={[
           !loading
-            ? backgroundColor
+            ? disabled
+              ? styles.disabled
+              : backgroundColor
               ? { backgroundColor: backgroundColor }
               : GlobalStyles.backgroundColorPrimary
             : styles.disabled,

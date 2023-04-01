@@ -4,6 +4,7 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
+  ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
 import React from "react";
@@ -17,27 +18,89 @@ import FullWidthButton from "../components/shared/FullWidthButton";
 import ActionButton from "../components/shared/ActionButton";
 import Colors from "../constants/Colors";
 import { ScreenNavigationType } from "../types";
+import { getEndpoint, patchToEndpoint } from "../api/responseHandler";
+import API from "../api/API";
 
 const AccountInfoScreen: React.FC<ScreenNavigationType> = ({
   navigation,
   route,
 }) => {
+  // States
+  const [firstName, setFirstName] = React.useState<string>("");
+  const [lastName, setLastName] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
+  const [mobile, setMobile] = React.useState<string>("");
+
+  // Refs
   const firstNameRef = React.useRef<any>();
   const lastNameRef = React.useRef<any>();
   const emailRef = React.useRef<any>();
   const mobileRef = React.useRef<any>();
-
-  // States
-  const [firstName, setFirstName] = React.useState<string | null>(null);
-  const [lastName, setLastName] = React.useState<string | null>(null);
-  const [email, setEmail] = React.useState<string | null>(null);
-  const [mobile, setMobile] = React.useState<string | null>(null);
+  const detailsRef = React.useRef<any>();
 
   // Loading
+  const [sending, setSending] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
 
+  // Functions
+  // Get user details
+  const getDetails = async () => {
+    setLoading(() => true);
+    try {
+      const res = await getEndpoint(API.getUserDetails);
+      detailsRef.current = res;
+
+      setFirstName(() => detailsRef.current.first_name);
+      setLastName(() => detailsRef.current.last_name);
+      setEmail(() => detailsRef.current.email);
+      setMobile(() => detailsRef.current.phone_number);
+    } catch (err) {
+      throw new Error("AccountInfo: Get details");
+    }
+    setLoading(() => false);
+  };
+
   // Submit Handler
-  const handleSubmit = async () => {};
+  const handleSubmit = async () => {
+    setSending(() => true);
+    try {
+      const reqData = {
+        first_name: firstName,
+        last_name: lastName,
+        phone_number: mobile,
+        email,
+      };
+      const res = await patchToEndpoint(API.getUserDetails, reqData);
+      if (res) {
+        alert("Details changed succesfully");
+      }
+
+      setSending(() => false);
+    } catch (err) {
+      setSending(() => false);
+      console.log(err);
+      throw new Error("AccountInfo: submit");
+    }
+  };
+
+  // use Effects
+  // Fetch details
+  React.useEffect(() => {
+    try {
+      getDetails();
+    } catch (err) {
+      console.log(err);
+      throw new Error("Error while trying to get User Details False");
+    }
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={[GlobalStyles.root, GlobalStyles.flexCenter]}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={[GlobalStyles.root]}>
@@ -63,6 +126,7 @@ const AccountInfoScreen: React.FC<ScreenNavigationType> = ({
             onChangeText={setFirstName}
             placeholder={"John"}
           />
+
           <AuthInput
             label="Last Name"
             ref={lastNameRef}
@@ -70,6 +134,7 @@ const AccountInfoScreen: React.FC<ScreenNavigationType> = ({
             onChangeText={setLastName}
             placeholder={"Doe"}
           />
+
           <AuthInput
             label="Email"
             ref={emailRef}
@@ -77,6 +142,7 @@ const AccountInfoScreen: React.FC<ScreenNavigationType> = ({
             onChangeText={setEmail}
             placeholder={"johndoe@gmail.com"}
           />
+
           <AuthInput
             label="Mobile Number"
             ref={mobileRef}
@@ -102,8 +168,10 @@ const AccountInfoScreen: React.FC<ScreenNavigationType> = ({
         <FullWidthButton
           label="Save Changes"
           onPress={handleSubmit}
-          disabled={false}
-          loading={loading}
+          disabled={
+            firstName == "" || lastName == "" || mobile == "" || email == ""
+          }
+          loading={sending}
         />
       </BottomShadow>
     </SafeAreaView>
