@@ -35,7 +35,7 @@ export default function CartContextProvider({
   const getCart = async () => {
     const cart = await AsyncStorage.getItem("@cart");
 
-    setCart(() => JSON.parse(cart) || []);
+    setCart(() => (cart ? JSON.parse(cart) : []));
   };
 
   const addToCart = async (product: ProductType) => {
@@ -70,7 +70,7 @@ export default function CartContextProvider({
 
     await AsyncStorage.setItem("@cart", JSON.stringify(cart));
 
-    await getCart();
+    // await getCart();
   };
 
   const updateCount = async (_id: string, action: "increase" | "decrease") => {

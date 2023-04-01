@@ -41,8 +41,13 @@ const AuthenticatedStack = () => {
           <Stack.Screen name="Home" component={HomeTabs} />
 
           <Stack.Screen name="LocationScreen" component={LocationScreen} />
+
+          {/* View More Screen */}
+          <Stack.Screen name="ViewMoreScreen" component={ViewMoreScreen} />
+
           {/* Cart */}
           <Stack.Screen name="CartScreen" component={CartScreen} />
+
           {/* Checkout */}
           <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
 
@@ -100,7 +105,6 @@ const AuthenticatedStack = () => {
             name="EditProductScreen"
             component={EditProductScreen}
           />
-          <Stack.Screen name="ViewMoreScreen" component={ViewMoreScreen} />
           <Stack.Screen
             name="FoodServiceOrderDetailsScreen"
             component={FoodServiceOrderDetailsScreen}

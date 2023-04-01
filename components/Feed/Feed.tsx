@@ -44,10 +44,10 @@ const Feed: React.FC<FeedType> = ({ Sections }) => {
           return (
             <>
               {/* @ts-ignore */}
-              <SectionHeader section={section} />
+              <SectionHeader section={section} data={Sections} />
 
               <FlatList
-                data={section.data}
+                data={section.data.slice(0, 7)}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 horizontal={true}
@@ -65,7 +65,7 @@ const Feed: React.FC<FeedType> = ({ Sections }) => {
                       label={item.name}
                       location={item.location}
                       price={item.price}
-                      isFood={item.isFood}
+                      isFood={Sections.indexOf(section) == 0}
                     />
                   );
                 }}

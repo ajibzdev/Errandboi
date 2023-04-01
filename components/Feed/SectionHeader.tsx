@@ -3,14 +3,24 @@ import React from "react";
 import { SectionType } from "../../types";
 import GlobalStyles from "../../GlobalStyles";
 import Fonts from "../../constants/Fonts";
+import { useNavigation } from "@react-navigation/native";
 
 const SectionHeader = ({
   section,
-  onPress,
+  data,
 }: {
   section: SectionType;
-  onPress: () => void;
+  data: any;
 }) => {
+  // Navigation
+  const navigation = useNavigation();
+
+  // Functions
+  const submitHandler = () => {
+    // @ts-ignore
+    navigation.navigate("ViewMoreScreen", { section, data });
+  };
+
   return (
     <View
       style={[
@@ -24,7 +34,7 @@ const SectionHeader = ({
         {section.title}
       </Text>
 
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={submitHandler}>
         <Text style={[Fonts.sansNormal, GlobalStyles.textColorPrimary]}>
           View more
         </Text>

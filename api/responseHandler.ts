@@ -108,8 +108,8 @@ export const patchToEndpoint = async (endpoint: string, data: any) => {
     const res = await axios.patch(endpoint, data);
 
     return res.data;
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    console.log(err.response);
     throw new Error("Response Hanlder: patch");
   }
 };
