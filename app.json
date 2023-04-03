@@ -15,7 +15,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -23,7 +25,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.ajibz_dev.errandboi"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -35,6 +42,12 @@
           "cameraPermission": "Allow $(Errandboi) to access your camera."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3bd73e48-b442-4f5a-b0a7-cfea291e9774"
+      }
+    },
+    "owner": "errandboi"
   }
 }

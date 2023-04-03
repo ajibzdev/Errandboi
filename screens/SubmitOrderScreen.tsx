@@ -14,13 +14,17 @@ const SubmitOrderScreen: React.FC<ScreenNavigationType> = ({
   route,
 }) => {
   const { location, dropOffInstructions } = route.params;
-  const handleCancel = async () => {};
+  const handleCancel = async () => {
+    navigation.goBack();
+    console.log("Cancelled");
+  };
 
   React.useEffect(() => {
     setTimeout(() => {
       navigation.navigate("OrderDetailsScreen");
     }, 3000);
   }, []);
+
   return (
     <SafeAreaView
       style={[
